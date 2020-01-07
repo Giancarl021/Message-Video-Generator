@@ -53,6 +53,6 @@
         "format": "mp4"
     },
     "dev": {
-        "useExec": false
+        "useExec": true
     }
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "install": "mkdir output && mkdir temp && mkdir temp/background && mkdir temp/foreground && mkdir temp/music && mkdir temp/slide",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
+    "start": "electron .",
+    "postinstall": "electron-rebuild ."
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,9 @@
     "image-size": "^0.8.3",
     "text2png": "^2.3.0",
     "videoshow": "^0.1.11"
+  },
+  "devDependencies": {
+    "electron": "^7.1.7",
+    "electron-rebuild": "^1.8.8"
   }
 }
