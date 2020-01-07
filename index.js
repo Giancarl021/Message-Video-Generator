@@ -13,6 +13,8 @@ function createWindow() {
         show: false
     });
 
+    // win.removeMenu();
+
     win.on('ready-to-show', () => { win.show() });
 
     win.loadFile('app/pages/main.html');
@@ -30,10 +32,10 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
-})
+});
 
 app.on('activate', () => {
     if (win === null) {
         createWindow();
     }
-})
+});

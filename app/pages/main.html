@@ -4,12 +4,20 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Site</title>
+    <title>Message Video Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/main.js"></script>
 </head>
 
 <body>
-    <button onclick="console.log(require('./../../video_maker/index'))">Iniciar processo</button>
+    <div id="toolbar">
+        <img class="toolbar-item" src="../assets/img/home.svg" title="Home" onclick="loadTab('home')"/>
+        <img class="toolbar-item" src="../assets/img/image.svg" title="Imagens" onclick="loadTab('images')"/>
+    </div>
+    <div id="content">
+    </div>
 </body>
 
 </html>

@@ -1,0 +1,50 @@
+:root {
+    --primary-color: rgb(204, 204, 204);
+    --background-color: rgb(40, 40, 56);
+    --background-secondary-color: rgb(43, 43, 61);
+    --toolbar-width: 50px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--background-color);
+    overflow: hidden;
+}
+
+#toolbar {
+    width: var(--toolbar-width);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--background-secondary-color);
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.toolbar-item {
+    width: 90%;
+    height: auto;
+    margin: 5px 0;
+}
+
+.toolbar-item:hover {
+    filter: brightness(.8);
+}
+
+.toolbar-item:active {
+    filter: brightness(.7);
+}
+
+#content {
+    position: absolute;
+    left: var(--toolbar-width);
+    top: 0;
+    width: calc(100% - var(--toolbar-width));
+    height: 100%;
+    overflow: auto;
+}
