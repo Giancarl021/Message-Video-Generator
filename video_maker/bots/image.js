@@ -21,11 +21,11 @@ function generateImages(phrases) {
     let i = 0;
     const paths = [];
     for (const phrase of phrases) {
-        const path = `temp/foreground/${i}.png`;
+        const path = `video_maker/temp/foreground/${i}.png`;
         textToImage(`${wrapText(phrase.message)}\n\n--- ${wrapText(phrase.author)} ---`, text, path);
         paths.push({
             text: path,
-            background: `temp/background/${i}.jpg`
+            background: `video_maker/temp/background/${i}.jpg`
         });
         i++;
     }
@@ -76,7 +76,7 @@ async function mergeImages(paths) {
     let i = 0;
     const outputs = [];
     for (const path of paths) {
-        const output = `temp/slide/${i++}.png`;
+        const output = `video_maker/temp/slide/${i++}.png`;
         await mergeImage(path.background, path.text, output);
         outputs.push(output);
     }
@@ -108,7 +108,7 @@ async function mergeImages(paths) {
 
 async function downloadRandomBackgrounds(n) {
     console.log('>>> Downloading backgrounds');
-    const destinationPath = 'temp/background';
+    const destinationPath = 'video_maker/temp/background';
 
     for (let i = 0; i < n; i++) {
         await downloadImage(`https://picsum.photos/${resolution.width}/${resolution.height}?random=${i}.jpg`, `${destinationPath}/${i}.jpg`);

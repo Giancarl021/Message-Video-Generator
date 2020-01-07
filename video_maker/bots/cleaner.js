@@ -2,9 +2,9 @@ const fs = require('fs');
 
 function main() {
     console.log('>> Initializing cleaner bot');
-    const tmp = fs.readdirSync('temp');
+    const tmp = fs.readdirSync('video_maker/temp');
     tmp.forEach(e => {
-        clearDirectory(`temp/${e}`)
+        clearDirectory(`video_maker/temp/${e}`)
     });
     console.log('>>> Temp files cleaned');
 }

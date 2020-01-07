@@ -20,7 +20,7 @@ async function fetchMusic() {
     const index = Math.floor(Math.random() * musics.length);
     const music = $(musics[index]);
     const url = $(music).find(elements.musicElement).attr(elements.musicUrlAttribute);
-    const destination = 'temp/music/song.mp3';
+    const destination = 'video_maker/temp/music/song.mp3';
     console.log('>>> Downloading music');
     await fetchData(url, destination);
     return {url: url, path: destination};

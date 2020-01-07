@@ -81,7 +81,7 @@ async function getSlideDuration(data, n) {
     if (videoOptions.slideDuration && typeof videoOptions.slideDuration === 'number') {
         slideDuration = calculateBpmDuration(data, videoOptions.slideDuration);
     } else {
-        const audioDuration = await getAudioDurationInSeconds('temp/music/song.mp3');
+        const audioDuration = await getAudioDurationInSeconds('video_maker/temp/music/song.mp3');
         slideDuration = calculateBpmDuration(data, audioDuration / n);
     }
     return slideDuration;
