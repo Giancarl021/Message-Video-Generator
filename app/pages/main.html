@@ -6,16 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Message Video Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    <script src="../assets/js/common.js"></script>
     <script src="../assets/js/main.js"></script>
 </head>
 
 <body>
-    <div id="toolbar">
+    <div id="toolbar" data-initial-tab="images">
         <img class="toolbar-item" src="../assets/img/home.svg" title="Home" onclick="loadTab('home', this)" alt="home"/>
         <img class="toolbar-item" src="../assets/img/image.svg" title="Imagens" onclick="loadTab('images', this)" alt="images"/>
+        <img class="toolbar-item" src="../assets/img/folder.svg" title="Diretórios" onclick="loadTab('directories', this)" alt="directories"/>
     </div>
     <div id="content">
     </div>

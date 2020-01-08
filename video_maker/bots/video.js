@@ -89,10 +89,11 @@ async function getSlideDuration(data, n) {
 
 async function renderVideo(data, images, options) {
     console.log('>>> Rendering video');
+    const filename = videoOptions.filename || Date.now();
     return new Promise((resolve, reject) => {
         videoshow(images, options)
             .audio(data.music.path)
-            .save(`${videoOptions.outputPath}/${Date.now()}.mp4`)
+            .save(`${videoOptions.outputPath}/${filename}.mp4`)
             .on('error', reject)
             .on('end', () => {
                 console.log('>>> Video successfully rendered');
