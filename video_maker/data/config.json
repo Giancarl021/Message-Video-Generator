@@ -34,8 +34,9 @@
     },
     "image": {
         "text": {
-            "font": "60px Arial",
-            "color": "white",
+            "font": "Arial",
+            "size": "60",
+            "color": "#d76a06",
             "align": "center"
         },
         "backgroundColor": "#002f5e",
@@ -43,7 +44,7 @@
     },
     "video": {
         "filename": "",
-        "outputPath": "output",
+        "outputPath": "video_maker/output",
         "openingImage": "data/images/opening.png",
         "endingImage": "data/images/ending.png",
         "slideDuration": "auto",
