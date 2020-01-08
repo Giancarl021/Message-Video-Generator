@@ -1,5 +1,7 @@
+const { shell } = require('electron');
 const fs = require('fs');
 const prefixPath = 'app/pages/';
+const videoMaker = require('./../../video_maker/index.js');
 
 function loadFile(path) {
     return fs.readFileSync(prefixPath + path, 'utf8');
@@ -15,4 +17,12 @@ function saveJSON(path, data) {
 
 function loadJSON(path) {
     return JSON.parse(fs.readFileSync(prefixPath + path, 'utf8'));
+}
+
+function openLink(url) {
+    shell.openExternal(url);
+}
+
+function startRender() {
+    videoMaker();
 }

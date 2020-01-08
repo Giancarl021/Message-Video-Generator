@@ -1,0 +1,19 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    filter: brightness(.8);
+}
+
+a:active {
+    filter: brightness(.6);
+}
+
+a.credits {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+}

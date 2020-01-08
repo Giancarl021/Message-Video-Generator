@@ -1,7 +1,7 @@
 :root {
     --primary-color: rgb(204, 204, 204);
     --background-color: rgb(40, 40, 56);
-    --background-secondary-color: rgb(43, 43, 61);
+    --background-secondary-color: rgb(57, 57, 80);
     --toolbar-width: 50px;
     --global-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -34,4 +34,5 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }

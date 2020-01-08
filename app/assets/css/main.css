@@ -16,9 +16,10 @@ body {
 }
 
 .toolbar-item {
-    width: 90%;
+    width: 100%;
     height: auto;
-    margin: 5px 0;
+    margin-bottom: 5px;
+    transition: .2s;
 }
 
 .toolbar-item:hover {
@@ -27,6 +28,15 @@ body {
 
 .toolbar-item:active {
     filter: brightness(.7);
+}
+
+.toolbar-item-selected {
+    background-color: var(--background-color);
+}
+
+.toolbar-item-selected:hover,
+.toolbar-item-selected:active {
+    filter: none;
 }
 
 #content {

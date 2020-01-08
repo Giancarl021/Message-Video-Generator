@@ -35,7 +35,7 @@
     "image": {
         "text": {
             "font": "60px Arial",
-            "color": "#d76a06",
+            "color": "white",
             "align": "center"
         },
         "backgroundColor": "#002f5e",

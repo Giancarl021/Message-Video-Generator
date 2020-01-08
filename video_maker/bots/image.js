@@ -1,5 +1,5 @@
 const fs = require('fs');
-const imageHandler = require('text2png');
+const imageHandler = require('text-to-picture');
 const gm = require('gm').subClass({imageMagick: true});
 const imgDownloader = require('image-downloader');
 const data = require('../data/config');
@@ -11,18 +11,18 @@ const {useExec} = data.dev;
 
 async function main(phrases) {
     console.log('>> Initializing image bot');
-    const paths = generateImages(phrases);
+    const paths = await generateImages(phrases);
     await downloadRandomBackgrounds(phraseCount);
     return await mergeImages(paths);
 }
 
-function generateImages(phrases) {
+async function generateImages(phrases) {
     console.log('>>> Generating base images');
     let i = 0;
     const paths = [];
     for (const phrase of phrases) {
         const path = `video_maker/temp/foreground/${i}.png`;
-        textToImage(`${wrapText(phrase.message)}\n\n--- ${wrapText(phrase.author)} ---`, text, path);
+        await textToImage(`${wrapText(phrase.message)}\n\n--- ${wrapText(phrase.author)} ---`, text, path);
         paths.push({
             text: path,
             background: `video_maker/temp/background/${i}.jpg`
@@ -32,16 +32,19 @@ function generateImages(phrases) {
 
     return paths;
 
-    function textToImage(text, font, output) {
-        fs.writeFileSync(output, imageHandler(text, {
+    async function textToImage(text, font, output) {
+        const image = await imageHandler.convert({
+            text: text,
             color: font.color,
-            backgroundColor: backgroundColor,
-            borderWidth: 7,
-            borderColor: font.color,
-            padding: 35,
-            font: font.font,
-            textAlign: font.align,
-        }));
+            source: {
+                width: 1920,
+                height: 1080,
+                background: backgroundColor
+            },
+            quality: '100'
+        });
+
+        await image.write(output);
     }
 
     function wrapText(text) {
