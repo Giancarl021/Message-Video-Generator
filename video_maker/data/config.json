@@ -42,6 +42,7 @@
         "wordWrapCharCount": 60
     },
     "video": {
+        "filename": "",
         "outputPath": "output",
         "openingImage": "data/images/opening.png",
         "endingImage": "data/images/ending.png",
