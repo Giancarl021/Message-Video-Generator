@@ -1,12 +1,34 @@
 function load() {
-    const videoMakerConfig = require('./../../../video_maker/data/config');
-    const resolution = videoMakerConfig.video.resolution;
-    const imageData = videoMakerConfig.image;
-
+    const imageConfig = require('./../../../video_maker/data/config').image;
+    const {text, backgroundColor} = imageConfig;
     const example = document.getElementById('message-example');
+    const bgColorPicker = document.getElementById('background-color-picker');
+    const fgColorPicker = document.getElementById('foreground-color-picker');
 
-    const proportion = Math.floor(example.parentElement.clientWidth / resolution.width);
-    console.log(proportion);
+    fgColorPicker.style.backgroundColor = fgColorPicker.getElementsByTagName('input')[0].value = example.style.color = example.style.borderColor = text.color;
+    bgColorPicker.style.backgroundColor = bgColorPicker.getElementsByTagName('input')[0].value = example.style.backgroundColor = backgroundColor;
+    example.style.fontFamily = text.font;
 }
 
-module.exports = load;
+function changeMessageValue(args) {
+    const example = document.getElementById('message-example');
+    if (!args.style || !args.value) {
+        throw new Error('Args not defined!');
+    }
+
+    switch (args.style) {
+        case 'background':
+            example.style.backgroundColor = args.value;
+            break;
+        case 'foreground':
+            example.style.color = example.style.borderColor = args.value;
+            break;
+        case 'font':
+            example.style.fontFamily = args.value;
+    }
+}
+
+module.exports = {
+    load,
+    changeMessageValue
+};

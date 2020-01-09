@@ -15,7 +15,7 @@ async function main() {
             throw new Error('Connection Failed');
         }
         const {url, pages} = phraseSrc;
-        const phrase = await getPhrase(url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.sufix);
+        const phrase = await getPhrase(url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.suffix);
         if (!phrase) {
             console.log('>>> Miss load');
             consecutiveMiss++;

@@ -1,9 +1,47 @@
 <div class="container">
     <div id="configure-message">
         <div class="message-example-container">
-            <div id="message-example"></div>
+            <div id="message-example">
+                Conteúdo da mensagem
+                <br/>
+                <br/>
+                --- Autor ---
+            </div>
+        </div>
+        <div class="message-controls">
+            <div class="message-control">
+                <div class="color-picker" id="foreground-color-picker">
+                    <input type="color" onchange="local('changeMessageValue', {style: 'foreground', value: this.value}); this.parentElement.style.backgroundColor = this.value"/>
+                </div>
+                Cor da fonte
+            </div>
+            <div class="message-control">
+                <div class="color-picker" id="background-color-picker">
+                    <input type="color" onchange="local('changeMessageValue', {style: 'background', value: this.value}); this.parentElement.style.backgroundColor = this.value"/>
+                </div>
+                Cor de fundo
+            </div>
+            <div class="message-control">
+                <select class="message-selector" onchange="local('changeMessageValue', {style: 'font', value: this.value})">
+                    <option selected>Arial</option>
+                    <option>Times New Roman</option>
+                    <option>Candara</option>
+                    <option>Courier New</option>
+                    <option>Comic Sans MS</option>
+                    <option>Georgia</option>
+                    <option>Garamond</option>
+                    <option>Impact</option>
+                    <option>Palatino</option>
+                    <option>Verdana</option>
+                </select>
+                Fonte
+            </div>
+            <div class="form-control">
+                <button class="reset-button" onclick="local('load')">Cancelar</button>
+                <button class="confirm-button">Salvar</button>
+            </div>
         </div>
     </div>
-    <div id="configure-op" onclick="test()"></div>
+    <div id="configure-op"></div>
     <div id="configure-ed"></div>
 </div>

@@ -3,6 +3,8 @@ const fs = require('fs');
 const prefixPath = 'app/pages/';
 const videoMaker = require('./../../video_maker/index.js');
 
+let localRequire = null;
+
 function loadFile(path) {
     return fs.readFileSync(prefixPath + path, 'utf8');
 }
@@ -57,8 +59,14 @@ function loadTab(target, element) {
     content.innerHTML = html;
 
     if (fs.existsSync(`app/assets/js/${target}.js`)) {
-        require(`./../assets/js/${target}`)();
+        localRequire = require(`./../assets/js/${target}`);
+        localRequire.load();
     }
 }
+function local(fn, args = undefined) {
+    if(!localRequire) return;
+    localRequire[fn](args);
+}
+
 
 document.addEventListener('DOMContentLoaded', init);

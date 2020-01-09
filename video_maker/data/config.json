@@ -6,7 +6,7 @@
                 "min": 1,
                 "max": 25,
                 "prefix": "pagina",
-                "sufix": ".html"
+                "suffix": ".html"
             },
             "elements": {
                 "parentElement": ".col-xs-12",
@@ -20,7 +20,7 @@
                 "min": 1,
                 "max": 421,
                 "prefix": "?sort=track_date_published&d=1&page=",
-                "sufix": ""
+                "suffix": ""
             },
             "elements": {
                 "parentElement": ".play-item",
@@ -36,8 +36,7 @@
         "text": {
             "font": "Arial",
             "size": "60",
-            "color": "#d76a06",
-            "align": "center"
+            "color": "#d76a06"
         },
         "backgroundColor": "#002f5e",
         "wordWrapCharCount": 60
