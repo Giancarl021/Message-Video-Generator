@@ -28,7 +28,28 @@ function changeMessageValue(args) {
     }
 }
 
+function save() {
+    const data = loadJSON('video_maker/data/config.json');
+    console.log(data);
+    const example = document.getElementById('message-example');
+    const backgroundColor = example.style.backgroundColor;
+    const font = example.style.fontFamily;
+    const color = example.style.color;
+    if(backgroundColor) {
+        data.image.backgroundColor = backgroundColor;
+    }
+    if(font) {
+        data.image.text.font = font;
+    }
+    if(color) {
+        console.log(color); // Convert to HEX
+        data.image.text.color = color;
+    }
+    // saveJSON('video_maker/data/config.json', data);
+}
+
 module.exports = {
     load,
+    save,
     changeMessageValue
 };

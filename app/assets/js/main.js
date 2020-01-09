@@ -14,15 +14,15 @@ function saveFile(path, string) {
 }
 
 function saveJSON(path, data) {
-    fs.writeFileSync(prefixPath + path, JSON.stringify(data, null, 4));
+    fs.writeFileSync(path, JSON.stringify(data, null, 4));
 }
 
 function loadJSON(path) {
-    return JSON.parse(fs.readFileSync(prefixPath + path, 'utf8'));
+    return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
 function openLink(url) {
-    shell.openExternal(url);
+    shell.openExternal(url).catch(console.log);
 }
 
 function startRender() {
