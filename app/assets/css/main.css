@@ -16,7 +16,6 @@ body {
     padding: 0;
     min-height: 100vh;
     background-color: var(--background-color);
-    /*overflow: hidden;*/
 }
 
 .center {
@@ -81,6 +80,6 @@ body {
     top: 0;
     width: calc(100% - var(--toolbar-width));
     height: 100%;
-    min-height: 800px;
-    min-width: 900px;
+    min-height: 600px;
+    min-width: 800px;
 }

@@ -1,16 +1,24 @@
 function load() {
-    const imageConfig = require('./../../../video_maker/data/config').image;
+    const imageConfig = loadJSON('video_maker/data/config.json').image;
     const {text, backgroundColor} = imageConfig;
     const example = document.getElementById('message-example');
     const bgColorPicker = document.getElementById('background-color-picker');
     const fgColorPicker = document.getElementById('foreground-color-picker');
+    const fontSelector = document.getElementById('font-selector');
 
+    document.getElementsByClassName('form-control')[0].className += ' form-locked';
     fgColorPicker.style.backgroundColor = fgColorPicker.getElementsByTagName('input')[0].value = example.style.color = example.style.borderColor = text.color;
     bgColorPicker.style.backgroundColor = bgColorPicker.getElementsByTagName('input')[0].value = example.style.backgroundColor = backgroundColor;
     example.style.fontFamily = text.font;
+    fontSelector.value = text.font.replace(/\"/g, '');
+
 }
 
 function changeMessageValue(args) {
+    const form = document.getElementsByClassName('form-control')[0];
+    if(form.classList.contains('form-locked')) {
+        form.className = form.className.replace('form-locked', '');
+    }
     const example = document.getElementById('message-example');
     if (!args.style || !args.value) {
         throw new Error('Args not defined!');
@@ -29,23 +37,22 @@ function changeMessageValue(args) {
 }
 
 function save() {
+    document.getElementsByClassName('form-control')[0].className += ' form-locked';
     const data = loadJSON('video_maker/data/config.json');
-    console.log(data);
     const example = document.getElementById('message-example');
-    const backgroundColor = example.style.backgroundColor;
+    const backgroundColor = cssRgbToHex(example.style.backgroundColor);
     const font = example.style.fontFamily;
-    const color = example.style.color;
+    const color = cssRgbToHex(example.style.color);
     if(backgroundColor) {
-        data.image.backgroundColor = backgroundColor;
+        data.image.backgroundColor = backgroundColor; // Convert to HEX
     }
     if(font) {
         data.image.text.font = font;
     }
     if(color) {
-        console.log(color); // Convert to HEX
         data.image.text.color = color;
     }
-    // saveJSON('video_maker/data/config.json', data);
+    saveJSON('video_maker/data/config.json', data);
 }
 
 module.exports = {

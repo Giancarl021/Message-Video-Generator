@@ -25,6 +25,20 @@ function openLink(url) {
     shell.openExternal(url).catch(console.log);
 }
 
+function rgbToHex(r, g, b) {
+    return `#${decToHex(r)}${decToHex(g)}${decToHex(b)}`
+
+    function decToHex(n) {
+        const num = parseInt(n).toString(16);
+        return num.length < 2 ? '0' + num : num;
+    }
+}
+
+function cssRgbToHex(string) {
+    const values = string.substring(string.indexOf('(') + 1, string.indexOf(')')).split(',');
+    return rgbToHex(values[0], values[1], values[2]);
+}
+
 function startRender() {
     videoMaker();
 }
@@ -64,7 +78,14 @@ function loadTab(target, element) {
     }
 }
 function local(fn, args = undefined) {
-    if(!localRequire) return;
+    if(!localRequire) {
+        console.error('Local JS is not defined');
+        return;
+    }
+    if(typeof localRequire[fn] !== 'function') {
+        console.error('Local JS Call is not a function');
+        return;
+    }
     localRequire[fn](args);
 }
 

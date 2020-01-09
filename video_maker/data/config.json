@@ -34,11 +34,11 @@
     },
     "image": {
         "text": {
-            "font": "Impact",
+            "font": "Arial",
             "size": "60",
-            "color": "rgb(215, 106, 6)"
+            "color": "#d76a06"
         },
-        "backgroundColor": "rgb(0, 47, 94)",
+        "backgroundColor": "#002f5e",
         "wordWrapCharCount": 60
     },
     "video": {
