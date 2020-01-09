@@ -7,31 +7,14 @@
 }
 
 .container > div {
+    position: relative;
     float: left;
-    transition: opacity .3s;
-    opacity: .6;
-}
-
-.container > div:hover {
-    opacity: 1;
 }
 
 #configure-message {
     height: 100%;
     width: 50%;
     background-color: #0002;
-}
-
-#configure-op {
-    height: 50%;
-    width: 50%;
-    background-color: #0004;
-}
-
-#configure-ed {
-    height: 50%;
-    width: 50%;
-    background-color: #0006;
 }
 
 .message-example-container {
@@ -75,6 +58,21 @@
     font-size: 32px;
     padding: 10px;
     user-select: none;
+}
+
+.message-control-button {
+    justify-content: center;
+    text-align: center;
+    transition: background-color .3s, color .3s, filter .1s;
+}
+
+.message-control-button:hover {
+    color: var(--background-color);
+    background-color: var(--primary-color);
+}
+
+.message-control-button:active {
+    filter: brightness(.3);
 }
 
 .form-control {
@@ -157,4 +155,76 @@
 .reset-button:active,
 .confirm-button:active {
     filter: brightness(1.5);
+}
+
+#configure-op,
+#configure-ed {
+    height: 50%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#configure-op {
+    background-color: #0004;
+}
+
+#configure-ed {
+    background-color: #0006;
+}
+
+#configure-op > img,
+#configure-ed > img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#configure-op:hover > .image-controls,
+#configure-ed:hover > .image-controls {
+    opacity: 1;
+}
+
+.image-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000D;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity .3s;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    user-select: none;
+}
+
+.image-control {
+    max-width: 80%;
+    min-width: 60%;
+    background-color: #000A;
+    border: 2px solid var(--primary-color);
+    padding: 10px;
+    transition: color .3s, background-color .3s, filter .1s;
+}
+
+.image-control:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.image-control:active {
+    filter: brightness(.3);
+}
+
+.disabled-image-control {
+    filter: brightness(.1);
+    pointer-events: none;
+}
+
+.invisible-input {
+    display: none;
 }

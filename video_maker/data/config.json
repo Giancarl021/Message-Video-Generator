@@ -44,8 +44,8 @@
     "video": {
         "filename": "",
         "outputPath": "video_maker/output",
-        "openingImage": "data/images/opening.png",
-        "endingImage": "data/images/ending.png",
+        "openingImage": "",
+        "endingImage": "",
         "slideDuration": "auto",
         "resolution": {
             "width": 1920,

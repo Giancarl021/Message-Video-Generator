@@ -21,6 +21,9 @@
                 </div>
                 Cor de fundo
             </div>
+            <div class="message-control message-control-button" onclick="local('invertColors')">
+                Inverter Cores
+            </div>
             <div class="message-control">
                 <select id="font-selector" class="message-selector" onchange="local('changeMessageValue', {style: 'font', value: this.value})">
                     <option>Arial</option>
@@ -37,11 +40,35 @@
                 Fonte
             </div>
             <div class="form-control">
-                <button class="reset-button" onclick="local('load')">Cancelar</button>
-                <button class="confirm-button" onclick="local('save')">Salvar</button>
+                <button class="reset-button" onclick="local('loadMessageTile')">Cancelar</button>
+                <button class="confirm-button" onclick="local('saveMessageTile')">Salvar</button>
             </div>
         </div>
     </div>
-    <div id="configure-op"></div>
-    <div id="configure-ed"></div>
+    <div id="configure-op">
+        <img id="op-img" title="Imagem de Abertura" src="" alt="Opening Image"/>
+        <div class="image-controls">
+            <h1>Imagem Inicial</h1>
+            <h2 class="image-control add-img" onclick="local('addImage', {target: 'add-op-img'})">
+                Adicionar imagem
+            </h2>
+            <input class="invisible-input" id="add-op-img" type="file" accept="image/*"/>
+            <h2 class="image-control rm-img" onclick="local('removeImage', {target: 'op'})">
+                Remover Imagem
+            </h2>
+        </div>
+    </div>
+    <div id="configure-ed">
+        <img id="ed-img" title="Imagem de Abertura" src="" alt="Opening Image"/>
+        <div class="image-controls">
+            <h1>Imagem Final</h1>
+            <h2 class="image-control add-img" onclick="local('addImage', {target: 'add-ed-img'})">
+                Adicionar imagem
+            </h2>
+            <input class="invisible-input" id="add-ed-img" type="file" accept="image/*"/>
+            <h2 class="image-control rm-img" onclick="local('removeImage', {target: 'ed'})">
+                Remover Imagem
+            </h2>
+        </div>
+    </div>
 </div>

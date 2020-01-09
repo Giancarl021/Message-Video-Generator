@@ -55,6 +55,7 @@ body {
     height: auto;
     margin-bottom: 5px;
     transition: .2s;
+    user-select: none;
 }
 
 .toolbar-item:hover {

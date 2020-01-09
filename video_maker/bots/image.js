@@ -34,8 +34,8 @@ async function generateImages(phrases) {
         return new Promise((resolve, reject) => {
             if (useExec) {
                 exec(`magick -background ${backgroundColor} -fill ${font.color} -font ${font.font} -pointsize ${font.size} -gravity center label:"${text.replace(/\n/g, '\\n').replace(/"/g, '\\"')}" -gravity southeast -splice 20x20 -gravity northwest -splice 20x20 -bordercolor ${font.color} -border 3x3 ${output}`, (err, stdout, stderr) => {
-                    if (err) reject(err);
-                    resolve();
+                    if (err) return reject(err);
+                    return resolve();
                 });
             } else {
                 gm()

@@ -25,6 +25,14 @@ function openLink(url) {
     shell.openExternal(url).catch(console.log);
 }
 
+function fileExists(path) {
+    return fs.existsSync(path);
+}
+
+function deleteFile(path) {
+    fs.unlinkSync(path);
+}
+
 function rgbToHex(r, g, b) {
     return `#${decToHex(r)}${decToHex(g)}${decToHex(b)}`
 
@@ -89,5 +97,9 @@ function local(fn, args = undefined) {
     localRequire[fn](args);
 }
 
+
+function showMsgBox(message) {
+    alert(message);
+}
 
 document.addEventListener('DOMContentLoaded', init);
