@@ -53,6 +53,7 @@
     font-family: 'Arial', sans-serif;
     font-size: 50px;
     user-select: none;
+    transition: all .3s;
 }
 
 .message-controls {
@@ -73,6 +74,7 @@
     flex-direction: row;
     font-size: 32px;
     padding: 10px;
+    user-select: none;
 }
 
 .form-control {
@@ -104,7 +106,6 @@
     font-size: 32px;
     outline: none;
     border: none;
-
 }
 
 .message-selector > option {
