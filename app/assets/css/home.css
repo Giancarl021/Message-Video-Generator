@@ -33,7 +33,7 @@ button:active {
 }
 
 .input-container {
-    height: 20%;
+    height: 200px;
 }
 
 .input-container > * {
@@ -78,6 +78,7 @@ button:active {
 }
 
 .container {
+    position: relative;
     width: 100%;
-    height: calc(80% - 2px);
+    height: calc(100% - 200px);
 }
