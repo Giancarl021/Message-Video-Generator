@@ -13,7 +13,7 @@
                 <div class="color-picker" id="foreground-color-picker">
                     <input type="color" onchange="local('changeMessageValue', {style: 'foreground', value: this.value}); this.parentElement.style.backgroundColor = this.value"/>
                 </div>
-                Cor da fonte
+                Cor do texto
             </div>
             <div class="message-control">
                 <div class="color-picker" id="background-color-picker">
@@ -26,16 +26,16 @@
             </div>
             <div class="message-control">
                 <select id="font-selector" class="message-selector" onchange="local('changeMessageValue', {style: 'font', value: this.value})">
-                    <option>Arial</option>
-                    <option>Times New Roman</option>
-                    <option>Candara</option>
-                    <option>Courier New</option>
-                    <option>Comic Sans MS</option>
-                    <option>Georgia</option>
-                    <option>Garamond</option>
-                    <option>Impact</option>
-                    <option>Palatino</option>
-                    <option>Verdana</option>
+                    <option style="font-family: 'Arial'">Arial</option>
+                    <option style="font-family: 'Times New Roman'">Times New Roman</option>
+                    <option style="font-family: 'Candara'">Candara</option>
+                    <option style="font-family: 'Courier New'">Courier New</option>
+                    <option style="font-family: 'Comic Sans MS'">Comic Sans MS</option>
+                    <option style="font-family: 'Georgia'">Georgia</option>
+                    <option style="font-family: 'Garamond'">Garamond</option>
+                    <option style="font-family: 'Impact'">Impact</option>
+                    <option style="font-family: 'Palatino'">Palatino</option>
+                    <option style="font-family: 'Verdana'">Verdana</option>
                 </select>
                 Fonte
             </div>
