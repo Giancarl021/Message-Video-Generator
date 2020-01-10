@@ -43,7 +43,7 @@
     },
     "video": {
         "filename": "",
-        "outputPath": "video_maker/output",
+        "outputPath": "",
         "openingImage": "",
         "endingImage": "",
         "slideDuration": "auto",

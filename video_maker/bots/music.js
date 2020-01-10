@@ -15,7 +15,7 @@ async function main() {
 async function fetchMusic() {
     console.log('>>> Searching music');
     const {pages, elements} = musicSrc;
-    const $ = await getHtml(musicSrc.url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.sufix);
+    const $ = await getHtml(musicSrc.url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.suffix);
     const musics = $(elements.parentElement);
     const index = Math.floor(Math.random() * musics.length);
     const music = $(musics[index]);

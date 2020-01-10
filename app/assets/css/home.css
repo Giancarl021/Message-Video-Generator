@@ -1,0 +1,83 @@
+input {
+    width: 100%;
+    font-size: 32px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+input[disabled] {
+    opacity: .8;
+}
+
+button {
+    width: calc(100%);
+    font-size: 24px;
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    margin-top: 10px;
+    outline: none;
+    transition: background-color .3s, color .3s, filter .1s;
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+button:active {
+    filter: brightness(.6);
+}
+
+.input-container {
+    height: 20%;
+}
+
+.input-container > * {
+    float: left;
+}
+
+#start-rendering {
+    float: left;
+    width: 50%;
+    height: 100%;
+    margin: 0;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+#start-rendering:hover {
+    background-color: var(--secondary-color);
+    color: var(--background-secondary-color);
+}
+
+.inputs {
+    width: calc(50% - 20px);
+    padding: 10px;
+    background-color: #0002;
+}
+
+.input {
+    margin-bottom: 10px;
+}
+
+#report-container {
+    width: 100%;
+    height: 100%;
+    background-color: #0004;
+    text-align: left;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    resize: none;
+}
+
+.container {
+    width: 100%;
+    height: calc(80% - 2px);
+}

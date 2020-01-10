@@ -1,5 +1,6 @@
 :root {
     --primary-color: rgb(204, 204, 204);
+    --secondary-color: rgb(117, 117, 117);
     --background-color: rgb(40, 40, 56);
     --background-secondary-color: rgb(57, 57, 80);
     --toolbar-width: 50px;
@@ -48,6 +49,7 @@ body {
     justify-content: start;
     align-items: center;
     flex-direction: column;
+    transition: opacity .3s;
 }
 
 .toolbar-item {
@@ -56,6 +58,12 @@ body {
     margin-bottom: 5px;
     transition: .2s;
     user-select: none;
+}
+
+.config-button {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
 }
 
 .toolbar-item:hover {
@@ -68,6 +76,7 @@ body {
 
 .toolbar-item-selected {
     background-color: var(--background-color);
+    pointer-events: none;
 }
 
 .toolbar-item-selected:hover,

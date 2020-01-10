@@ -1,3 +1,4 @@
+const printer = require('./print');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const configs = require('./../data/config');
@@ -5,10 +6,10 @@ const {phraseCount} = configs.phrase;
 const phraseSrc = configs.src.phrase;
 
 async function main() {
-    console.log('>> Initializing phrase bot');
+    printer.print('>> Initializing phrase bot');
     let consecutiveMiss = 0, skip;
     const phrases = [];
-    console.log('>>> Fetching phrases');
+    printer.print('>>> Fetching phrases');
     while (phrases.length < phraseCount) {
         skip = false;
         if (consecutiveMiss === 15) {
@@ -17,17 +18,17 @@ async function main() {
         const {url, pages} = phraseSrc;
         const phrase = await getPhrase(url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.suffix);
         if (!phrase) {
-            console.log('>>> Miss load');
+            printer.print('>>> Miss load');
             consecutiveMiss++;
             continue;
         }
         if (phrase.message.length > 240) {
-            console.log('>>> Skipping long phrase');
+            printer.print('>>> Skipping long phrase');
             continue;
         }
 
         if(phrase.message.length < 5) {
-            console.log('>>> Skipping short phrase');
+            printer.print('>>> Skipping short phrase');
             continue;
         }
 
@@ -37,7 +38,7 @@ async function main() {
 
         for (const p of phrases) {
             if (phrase.message === p.message) {
-                console.log(`>>> Skipping equal phrase: ${phrase.origin} | ${p.origin}`);
+                printer.print(`>>> Skipping equal phrase: ${phrase.origin} | ${p.origin}`);
                 skip = true;
                 break;
             }

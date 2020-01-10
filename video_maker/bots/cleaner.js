@@ -1,12 +1,13 @@
+const printer = require('./print');
 const fs = require('fs');
 
 function main() {
-    console.log('>> Initializing cleaner bot');
+    printer.print('>> Initializing cleaner bot');
     const tmp = fs.readdirSync('video_maker/temp');
     tmp.forEach(e => {
         clearDirectory(`video_maker/temp/${e}`)
     });
-    console.log('>>> Temp files cleaned');
+    printer.print('>>> Temp files cleaned');
 }
 
 function clearDirectory(path) {

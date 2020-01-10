@@ -1,4 +1,5 @@
 const bots = {
+    print: require('./bots/print'),
     phrase: require('./bots/phrase'),
     image: require('./bots/image'),
     music: require('./bots/music'),
@@ -7,13 +8,15 @@ const bots = {
     devTools: require('./bots/dev-tools')
 };
 
-async function main() {
+async function main(element) {
+    bots.print.setElement(element);
     const data = {};
     bots.cleaner();
     data.phrases = await bots.phrase();
-    // /* # */ bots.devTools.saveJSON('video_maker/temp/data.json', data);
-    // /* # */ const data = bots.devTools.loadJSON('video_maker/data/data.json');
     data.image = await bots.image(data.phrases);
+
+    // /* # */ bots.devTools.saveJSON('C:\Users\Pichau\Documents\Git\Message-Video-Generator\video_maker\temp\data.json', data);
+    // /* # */ const data = bots.devTools.loadJSON('C:\\Users\\Pichau\\Documents\\Git\\Message-Video-Generator\\video_maker\\temp\\data.json');
     data.music = await bots.music();
     await bots.video(data);
     bots.devTools.saveJSON('video_maker/temp/data.json', data);

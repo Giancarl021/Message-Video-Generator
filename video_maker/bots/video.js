@@ -1,3 +1,4 @@
+const printer = require('./print');
 const videoshow = require('videoshow');
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
@@ -11,7 +12,7 @@ const imageSize = require('image-size');
 const {getAudioDurationInSeconds} = require('get-audio-duration');
 
 async function main(data) {
-    console.log('>> Video bot initialing');
+    printer.print('>> Video bot initialing');
     const images = insertImages(data);
     const slideDuration = await getSlideDuration(data, images.length);
     const options = {
@@ -40,7 +41,7 @@ function calculateBpmDuration(data, seconds) {
 }
 
 function insertImages(data) {
-    console.log('>>> Parsing Images');
+    printer.print('>>> Parsing Images');
     const images = data.image;
 
     if (videoOptions.openingImage && fs.existsSync(videoOptions.openingImage) && fs.lstatSync(videoOptions.openingImage).isFile()) {
@@ -48,11 +49,11 @@ function insertImages(data) {
         try {
             dim = imageSize(videoOptions.openingImage);
         } catch (e) {
-            console.log('>>> Opening image file is not a image');
+            printer.print('>>> Opening image file is not a image');
             dim = false;
         }
         if (!dim || dim.width !== 1920 || dim.height !== 1080) {
-            if (dim) console.log('>>> Opening image with wrong resolution, resize the image to 1920x1080px');
+            if (dim) printer.print('>>> Opening image with wrong resolution, resize the image to 1920x1080px');
         } else {
             images.unshift(videoOptions.openingImage);
         }
@@ -63,11 +64,11 @@ function insertImages(data) {
         try {
             dim = imageSize(videoOptions.endingImage);
         } catch (e) {
-            console.log('>>> Ending image file is not a image');
+            printer.print('>>> Ending image file is not a image');
             dim = false;
         }
         if (!dim || dim.width !== 1920 || dim.height !== 1080) {
-            if (dim) console.log('>>> Ending image with wrong resolution, resize the image to 1920x1080px');
+            if (dim) printer.print('>>> Ending image with wrong resolution, resize the image to 1920x1080px');
         } else {
             images.push(videoOptions.endingImage);
         }
@@ -76,7 +77,7 @@ function insertImages(data) {
 }
 
 async function getSlideDuration(data, n) {
-    console.log('>>> Calculating slide duration');
+    printer.print('>>> Calculating slide duration');
     let slideDuration;
     if (videoOptions.slideDuration && typeof videoOptions.slideDuration === 'number') {
         slideDuration = calculateBpmDuration(data, videoOptions.slideDuration);
@@ -88,7 +89,7 @@ async function getSlideDuration(data, n) {
 }
 
 async function renderVideo(data, images, options) {
-    console.log('>>> Rendering video');
+    printer.print('>>> Rendering video');
     const filename = videoOptions.filename || Date.now();
     return new Promise((resolve, reject) => {
         videoshow(images, options)
@@ -96,7 +97,7 @@ async function renderVideo(data, images, options) {
             .save(`${videoOptions.outputPath}/${filename}.mp4`)
             .on('error', reject)
             .on('end', () => {
-                console.log('>>> Video successfully rendered');
+                printer.print('>>> Video successfully rendered');
                 resolve();
             });
     });

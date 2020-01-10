@@ -1,3 +1,17 @@
-<div class="full-center">
-    <button onclick="startRender()">Teste</button>
+<div class="input-container">
+    <div class="inputs">
+        <div class="input">
+            <label for="filename">Nome do arquivo</label>
+            <input type="text" id="filename"/>
+        </div>
+        <div class="input">
+            <label for="path">Diretório de saída</label>
+            <input type="text" id="output-directory" disabled/>
+            <button onclick="local('selectOutputDir')">Selecionar Diretório de Saída</button>
+        </div>
+    </div>
+    <button id="start-rendering" onclick="local('startRender')">Iniciar</button>
+</div>
+<div class="container">
+    <textarea readonly spellcheck="false" id="report-container"></textarea>
 </div>

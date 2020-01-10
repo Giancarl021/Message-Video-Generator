@@ -1,3 +1,4 @@
+const printer = require('./print');
 const gm = require('gm').subClass({ imageMagick: true });
 const imgDownloader = require('image-downloader');
 const data = require('../data/config');
@@ -8,14 +9,14 @@ const { exec } = require('child_process');
 const { useExec } = data.dev;
 
 async function main(phrases) {
-    console.log('>> Initializing image bot');
+    printer.print('>> Initializing image bot');
     const paths = await generateImages(phrases);
     await downloadRandomBackgrounds(phraseCount);
     return await mergeImages(paths);
 }
 
 async function generateImages(phrases) {
-    console.log('>>> Generating base images');
+    printer.print('>>> Generating base images');
     let i = 0;
     const paths = [];
     for (const phrase of phrases) {
@@ -87,7 +88,7 @@ async function generateImages(phrases) {
 }
 
 async function mergeImages(paths) {
-    console.log('>>> Merging images');
+    printer.print('>>> Merging images');
     let i = 0;
     const outputs = [];
     for (const path of paths) {
@@ -122,7 +123,7 @@ async function mergeImages(paths) {
 }
 
 async function downloadRandomBackgrounds(n) {
-    console.log('>>> Downloading backgrounds');
+    printer.print('>>> Downloading backgrounds');
     const destinationPath = 'video_maker/temp/background';
 
     for (let i = 0; i < n; i++) {

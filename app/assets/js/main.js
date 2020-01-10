@@ -1,7 +1,6 @@
 const { shell } = require('electron');
 const fs = require('fs');
 const prefixPath = 'app/pages/';
-const videoMaker = require('./../../video_maker/index.js');
 
 let localRequire = null;
 
@@ -45,10 +44,6 @@ function rgbToHex(r, g, b) {
 function cssRgbToHex(string) {
     const values = string.substring(string.indexOf('(') + 1, string.indexOf(')')).split(',');
     return rgbToHex(values[0], values[1], values[2]);
-}
-
-function startRender() {
-    videoMaker();
 }
 
 function init() {
