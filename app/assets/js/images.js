@@ -104,7 +104,6 @@ function fallbackImage(element) {
 
 function loadImageControllers() {
     const {openingImage, endingImage} = loadJSON('video_maker/data/config.json').video;
-    const path = require('path');
     const img = {
         op: document.getElementById('op-img'),
         ed: document.getElementById('ed-img')
@@ -147,7 +146,7 @@ function addImage(args) {
     const config = loadJSON('video_maker/data/config.json');
     if (!args.target) return;
     const target = document.getElementById(args.target);
-    target.onchange = async function (event) {
+    target.onchange = async function () {
         const file = target.files[0];
         if (!file) return;
         if (file.type.replace(/\/.*/g, '') !== 'image') {
@@ -174,16 +173,16 @@ function addImage(args) {
             return new Promise((resolve, reject) => {
                 if (useExec) {
                     const {exec} = require('child_process');
-                    exec(`magick ${filePath} -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} ${output}`, (err, stdout, stderr) => {
+                    exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${output}"`, (err, stdout, stderr) => {
                         if (err) return reject(err);
                         return resolve(output);
                     });
                 } else {
-                    gm(filePath)
+                    gm(`"${filePath}"`)
                         .resize(resolution.width, resolution.height)
                         .background('black')
                         .extent(resolution.width, resolution.height)
-                        .write(output, err => {
+                        .write(`"${output}"`, err => {
                             if (err) return reject(err);
                             return resolve(output);
                         });

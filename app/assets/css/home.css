@@ -20,7 +20,6 @@ button {
     border: 2px solid var(--primary-color);
     margin-top: 10px;
     outline: none;
-    /*transition: background-color .3s, color .3s, filter .1s;*/
 }
 
 button:hover {

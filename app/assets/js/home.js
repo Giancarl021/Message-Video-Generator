@@ -24,17 +24,17 @@ function selectOutputDir() {
 }
 
 function startRender() {
+    const config = loadJSON('video_maker/data/config.json');
+    if (!config.video.outputPath) {
+        showMsgBox('O diretório não foi selecionado!');
+        return;
+    }
+
     const toolbar = document.getElementById('toolbar');
     toolbar.style.pointerEvents = 'none';
     toolbar.style.opacity = '.6';
     document.getElementById('start-rendering').innerText = 'Cancelar';
     const videoMaker = require('./../../../video_maker/index');
-    const config = loadJSON('video_maker/data/config.json');
-
-    if (!config.video.outputPath) {
-        showMsgBox('O diretório não foi selecionado!');
-        return;
-    }
     config.video.filename = document.getElementById('filename').value;
 
     saveJSON('video_maker/data/config.json', config);

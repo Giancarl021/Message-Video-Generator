@@ -13,6 +13,7 @@ This will start an Electron window, with the main page loaded.
 
 * Run Video-Maker in different process.
 * Make Advanced Settings Tab (with allows the user to edit the *config.json* file in Video-Maker process)
+* Add Open Source Licenses Tab
 
 ### RELEASES
 

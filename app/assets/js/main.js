@@ -1,5 +1,6 @@
 const {shell} = require('electron');
 const fs = require('fs');
+const resolvePath = require('path').resolve;
 const prefixPath = 'app/pages/';
 const transitionLoadTime = 200;
 let localRequire = null;
@@ -7,29 +8,29 @@ let localRequire = null;
 // File
 
 function fileExists(path) {
-    return fs.existsSync(path);
+    return fs.existsSync(resolvePath(path));
 }
 
 function loadFile(path) {
-    return fs.readFileSync(prefixPath + path, 'utf8');
+    return fs.readFileSync(resolvePath(prefixPath + path), 'utf8');
 }
 
 function deleteFile(path) {
-    fs.unlinkSync(path);
+    fs.unlinkSync(resolvePath(path));
 }
 
 function saveFile(path, string) {
-    fs.writeFileSync(prefixPath + path, string);
+    fs.writeFileSync(resolvePath(prefixPath + path), string);
 }
 
 // JSON
 
 function saveJSON(path, data) {
-    fs.writeFileSync(path, JSON.stringify(data, null, 4));
+    fs.writeFileSync(resolvePath(path), JSON.stringify(data, null, 4));
 }
 
 function loadJSON(path) {
-    return JSON.parse(fs.readFileSync(path, 'utf8'));
+    return JSON.parse(fs.readFileSync(resolvePath(path), 'utf8'));
 }
 
 // External calls
@@ -85,9 +86,9 @@ function showMsgBox(message) {
 // Main page
 
 function loadCSSFiles() {
-    const path = 'app/assets/css';
+    const path = resolvePath('app/assets/css');
     fs.readdirSync(path).forEach(css => {
-        document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
+        document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${path}/${css}"/>`);
     });
 }
 
