@@ -84,12 +84,11 @@ function showMsgBox(message) {
 
 // Main page
 
-function init() {
-    const toolbar = document.getElementById('toolbar');
-    const initialTab = toolbar.getAttribute('data-initial-tab');
-    if (initialTab) {
-        loadTab(initialTab, document.querySelector(`[alt="${initialTab}"]`));
-    }
+function loadCSSFiles() {
+    const path = 'app/assets/css';
+    fs.readdirSync(path).forEach(css => {
+        document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
+    });
 }
 
 function loadTab(target, element) {
@@ -105,13 +104,8 @@ function loadTab(target, element) {
     }
 
     const content = document.getElementById('content');
-    let html = loadFile(`../tabs/${target}.html`);
 
-    if (fs.existsSync(`app/assets/css/${target}.css`)) {
-        html += `<link rel="stylesheet" href="../assets/css/${target}.css"/>`;
-    }
-
-    content.innerHTML = html;
+    content.innerHTML = loadFile(`../tabs/${target}.html`);
 
     if (fs.existsSync(`app/assets/js/${target}.js`)) {
         localRequire = require(`./../assets/js/${target}`);
@@ -119,4 +113,34 @@ function loadTab(target, element) {
     }
 }
 
+function init() {
+    const toolbar = document.getElementById('toolbar');
+    const initialTab = toolbar.getAttribute('data-initial-tab');
+    loadCSSFiles();
+    if (initialTab) {
+        loadTab(initialTab, document.querySelector(`[alt="${initialTab}"]`));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', init);
+
+let tabs = ['welcome', 'home', 'images', 'configs'];
+let selectedTab = 0;
+
+const interval = {
+    id: undefined,
+    time: 1000
+};
+
+
+function startTest() {
+    interval.id = setInterval(() => {
+        const i = selectedTab === tabs.length ? selectedTab = 0 : selectedTab++;
+        if(!selectedTab) selectedTab++;
+        loadTab(tabs[i], document.querySelector(`[alt="${tabs[i]}"]`));
+    }, interval.time);
+}
+
+function stopTest() {
+    clearInterval(interval.id);
+}

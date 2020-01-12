@@ -1,4 +1,4 @@
-.container {
+.image-container {
     position: absolute;
     left: 0;
     top: 0;
@@ -6,7 +6,7 @@
     height: 100%;
 }
 
-.container > div {
+.image-container > div {
     position: relative;
     float: left;
 }

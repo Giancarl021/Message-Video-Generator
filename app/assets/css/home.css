@@ -77,7 +77,7 @@ button:active {
     resize: none;
 }
 
-.container {
+.report-container {
     position: relative;
     width: 100%;
     height: calc(100% - 200px);
