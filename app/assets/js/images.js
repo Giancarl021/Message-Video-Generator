@@ -46,7 +46,7 @@ function changeMessageValue(args) {
 }
 
 function loadMessageTile() {
-    const imageConfig = loadJSON('video_maker/data/config.json').image;
+    const imageConfig = config.image;
     const {text, backgroundColor} = imageConfig;
     const example = document.getElementById('message-example');
     const bgColorPicker = document.getElementById('background-color-picker');
@@ -62,7 +62,7 @@ function loadMessageTile() {
 
 function saveMessageTile() {
     document.getElementsByClassName('form-control')[0].className += ' form-locked';
-    const data = loadJSON('video_maker/data/config.json');
+    const data = config;
     const example = document.getElementById('message-example');
     const backgroundColor = cssRgbToHex(example.style.backgroundColor);
     const font = example.style.fontFamily;
@@ -76,7 +76,7 @@ function saveMessageTile() {
     if (color) {
         data.image.text.color = color;
     }
-    saveJSON('video_maker/data/config.json', data);
+    saveJSON(__configPath, data);
 }
 
 function invertColors() {
@@ -103,7 +103,7 @@ function fallbackImage(element) {
 }
 
 function loadImageControllers() {
-    const {openingImage, endingImage} = loadJSON('video_maker/data/config.json').video;
+    const {openingImage, endingImage} = config.video;
     const img = {
         op: document.getElementById('op-img'),
         ed: document.getElementById('ed-img')
@@ -143,7 +143,6 @@ function modifyImageControls(element, hasImage) {
 }
 
 function addImage(args) {
-    const config = loadJSON('video_maker/data/config.json');
     if (!args.target) return;
     const target = document.getElementById(args.target);
     target.onchange = async function () {
@@ -160,7 +159,7 @@ function addImage(args) {
         } else if (args.target === 'add-ed-img') {
             config.video.endingImage = path;
         }
-        saveJSON('video_maker/data/config.json', config);
+        saveJSON(__configPath, config);
         stopLoadingController(target.parentElement.parentElement);
         loadImageControllers();
 
@@ -195,7 +194,7 @@ function addImage(args) {
 
 function removeImage(args) {
     if (!args.target) return;
-    const data = loadJSON('video_maker/data/config.json');
+    const data = config;
 
     if (args.target === 'op') {
         deleteFile(data.video.openingImage);
@@ -204,7 +203,7 @@ function removeImage(args) {
         deleteFile(data.video.endingImage);
         data.video.endingImage = '';
     }
-    saveJSON('video_maker/data/config.json', data);
+    saveJSON(__configPath, data);
     loadImageControllers();
 }
 

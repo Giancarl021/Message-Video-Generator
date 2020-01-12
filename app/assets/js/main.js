@@ -1,36 +1,45 @@
 const {shell} = require('electron');
 const fs = require('fs');
 const resolvePath = require('path').resolve;
-const prefixPath = 'app/pages/';
 const transitionLoadTime = 200;
 let localRequire = null;
+
+let __configPath = 'video_maker/data/config.json';
+let config;
 
 // File
 
 function fileExists(path) {
-    return fs.existsSync(resolvePath(path));
+    console.log('fileExists: ' + path);
+    return fs.existsSync(path);
 }
 
 function loadFile(path) {
-    return fs.readFileSync(resolvePath(prefixPath + path), 'utf8');
+    console.log('loadFile: ' + path);
+    return fs.readFileSync(path, 'utf8');
 }
 
 function deleteFile(path) {
-    fs.unlinkSync(resolvePath(path));
+    console.log('deleteFile: ' + path);
+    fs.unlinkSync(path);
 }
 
 function saveFile(path, string) {
-    fs.writeFileSync(resolvePath(prefixPath + path), string);
+    console.log('saveFile: ' + path);
+    fs.writeFileSync(path, string);
 }
 
 // JSON
 
 function saveJSON(path, data) {
-    fs.writeFileSync(resolvePath(path), JSON.stringify(data, null, 4));
+    console.log('saveJSON: ' + path);
+    fs.writeFileSync(path, JSON.stringify(data, null, 4));
+    config = loadJSON(path);
 }
 
 function loadJSON(path) {
-    return JSON.parse(fs.readFileSync(resolvePath(path), 'utf8'));
+    console.log('loadJSON: ' + path);
+    return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
 // External calls
@@ -46,7 +55,7 @@ function cssRgbToHex(string) {
     return rgbToHex(values[0], values[1], values[2]);
 
     function rgbToHex(r, g, b) {
-        return `#${decToHex(r)}${decToHex(g)}${decToHex(b)}`
+        return `#${decToHex(r)}${decToHex(g)}${decToHex(b)}`;
 
         function decToHex(n) {
             const num = parseInt(n).toString(16);
@@ -86,9 +95,9 @@ function showMsgBox(message) {
 // Main page
 
 function loadCSSFiles() {
-    const path = resolvePath('app/assets/css');
+    const path = 'app/assets/css';
     fs.readdirSync(path).forEach(css => {
-        document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${path}/${css}"/>`);
+        document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
     });
 }
 
@@ -106,7 +115,7 @@ function loadTab(target, element) {
 
     const content = document.getElementById('content');
 
-    content.innerHTML = loadFile(`../tabs/${target}.html`);
+    content.innerHTML = loadFile(`app/tabs/${target}.html`);
 
     if (fs.existsSync(`app/assets/js/${target}.js`)) {
         localRequire = require(`./../assets/js/${target}`);
@@ -117,6 +126,7 @@ function loadTab(target, element) {
 function init() {
     const toolbar = document.getElementById('toolbar');
     const initialTab = toolbar.getAttribute('data-initial-tab');
+    config = loadJSON(__configPath);
     loadCSSFiles();
     if (initialTab) {
         loadTab(initialTab, document.querySelector(`[alt="${initialTab}"]`));
