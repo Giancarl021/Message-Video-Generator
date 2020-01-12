@@ -1,6 +1,24 @@
 function load() {
     loadMessageTile();
     loadImageControllers();
+    loadTransitions(
+        {
+            selector: '#message-example',
+            value: 'color .3s'
+        },
+        {
+            selector: '.message-control-button, .image-control',
+            value: 'background-color .3s, color .3s, filter .1s'
+        },
+        {
+            selector: '.form-control, .image-controls',
+            value: 'opacity .3s'
+        },
+        {
+            selector: '.reset-button, .confirm-button',
+            value: 'filter .15s'
+        }
+    );
 }
 
 /* Message Tile */
@@ -29,7 +47,7 @@ function changeMessageValue(args) {
 
 function loadMessageTile() {
     const imageConfig = loadJSON('video_maker/data/config.json').image;
-    const { text, backgroundColor } = imageConfig;
+    const {text, backgroundColor} = imageConfig;
     const example = document.getElementById('message-example');
     const bgColorPicker = document.getElementById('background-color-picker');
     const fgColorPicker = document.getElementById('foreground-color-picker');
@@ -72,8 +90,8 @@ function invertColors() {
     fgColorPicker.style.backgroundColor = fgColorPicker.getElementsByTagName('input')[0].value = bg;
     bgColorPicker.style.backgroundColor = bgColorPicker.getElementsByTagName('input')[0].value = fg;
 
-    changeMessageValue({ style: 'foreground', value: bg });
-    changeMessageValue({ style: 'background', value: fg });
+    changeMessageValue({style: 'foreground', value: bg});
+    changeMessageValue({style: 'background', value: fg});
 }
 
 /* Image Tiles */
@@ -85,7 +103,7 @@ function fallbackImage(element) {
 }
 
 function loadImageControllers() {
-    const { openingImage, endingImage } = loadJSON('video_maker/data/config.json').video;
+    const {openingImage, endingImage} = loadJSON('video_maker/data/config.json').video;
     const path = require('path');
     const img = {
         op: document.getElementById('op-img'),
@@ -148,14 +166,14 @@ function addImage(args) {
         loadImageControllers();
 
         async function fitImage(filePath) {
-            const { useExec } = config.dev;
-            const { resolution } = config.video;
-            const gm = require('gm').subClass({ imageMagick: true });
+            const {useExec} = config.dev;
+            const {resolution} = config.video;
+            const gm = require('gm').subClass({imageMagick: true});
             const path = require('path');
             const output = path.resolve(`video_maker/data/images/${args.target}.png`);
             return new Promise((resolve, reject) => {
                 if (useExec) {
-                    const { exec } = require('child_process');
+                    const {exec} = require('child_process');
                     exec(`magick ${filePath} -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} ${output}`, (err, stdout, stderr) => {
                         if (err) return reject(err);
                         return resolve(output);

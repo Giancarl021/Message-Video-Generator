@@ -58,6 +58,7 @@ body {
     margin-bottom: 5px;
     transition: .2s;
     user-select: none;
+    cursor: pointer;
 }
 
 .config-button {

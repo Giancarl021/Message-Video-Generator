@@ -12,7 +12,6 @@ This will start an Electron window, with the main page loaded.
 ### TO DO
 
 * Run Video-Maker in different process.
-* Correct CSS hover glich (loading a tab will fire :hover animations)
 * Make Advanced Settings Tab (with allows the user to edit the *config.json* file in Video-Maker process)
 
 ### RELEASES

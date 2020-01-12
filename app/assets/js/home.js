@@ -2,6 +2,10 @@ function load() {
     const config = loadJSON('video_maker/data/config.json');
     const dir = document.getElementById('output-directory');
     dir.value = config.video.outputPath || 'Não definido';
+    loadTransitions({
+        selector: 'button',
+        value: 'background-color .3s, color .3s, filter .1s'
+    });
 }
 
 function selectOutputDir() {
@@ -10,7 +14,7 @@ function selectOutputDir() {
     const response = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
-    if(!response) {
+    if (!response) {
         return;
     }
     const path = response[0];
@@ -27,7 +31,7 @@ function startRender() {
     const videoMaker = require('./../../../video_maker/index');
     const config = loadJSON('video_maker/data/config.json');
 
-    if(!config.video.outputPath) {
+    if (!config.video.outputPath) {
         showMsgBox('O diretório não foi selecionado!');
         return;
     }
