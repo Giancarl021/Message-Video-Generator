@@ -7,10 +7,10 @@
         <div class="input">
             <label for="path">Diretório de saída</label>
             <input type="text" id="output-directory" disabled/>
-            <button onclick="local('selectOutputDir')">Selecionar Diretório de Saída</button>
+            <button class="home-button" onclick="local('selectOutputDir')">Selecionar Diretório de Saída</button>
         </div>
     </div>
-    <button id="start-rendering" onclick="local('startRender')">Iniciar</button>
+    <button class="home-button" id="start-rendering" onclick="local('startRender')">Iniciar</button>
 </div>
 <div class="report-container">
     <textarea readonly spellcheck="false" id="report-container"></textarea>

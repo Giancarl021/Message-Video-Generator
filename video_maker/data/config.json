@@ -42,7 +42,7 @@
         "wordWrapCharCount": 60
     },
     "video": {
-        "filename": "",
+        "filename": null,
         "outputPath": "C:\\Users\\Pichau\\Desktop",
         "openingImage": "",
         "endingImage": "",

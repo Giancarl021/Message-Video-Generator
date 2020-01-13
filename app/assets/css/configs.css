@@ -1,0 +1,104 @@
+.json-control {
+    width: 100%;
+    min-height: 40px;
+    background-color: #0003;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    font-size: 25px;
+}
+
+#json-container {
+    width: 100%;
+    width: 100%;
+}
+
+.json-object {
+    color: white;
+}
+
+.json-object-key {
+    color: var(--primary-color);
+}
+
+.json-object-content {
+    color: red;
+}
+
+.json-string {
+    color: rgb(184, 184, 68);
+}
+
+.json-number {
+    color: rgb(151, 72, 151);
+}
+
+.json-bool {
+    color: rgb(252, 104, 104);
+}
+
+.json-null {
+    color: rgb(70, 66, 66);
+}
+
+.json-value {
+    color: var(--secondary-color);
+}
+
+#json-container * {
+    margin-left: 20px;
+}
+
+.edit-configs {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-configs:hover {
+    background-color: #0004;
+}
+
+#raw-json-elements {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#raw-json {
+    position: fixed;
+    top: 20px;
+    left: calc(20px + var(--toolbar-width));
+    font-family: 'Consolas', monospace;
+    width: calc(100% - 40px - var(--toolbar-width));
+    height: calc(100% - 80px);
+    color: var(--background-color);
+    background-color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+    resize: none;
+    border: 0;
+    outline: 0;
+}
+
+.raw-json-controls {
+    position: fixed;
+    top: calc(100% - 60px);
+    left: calc(20px + var(--toolbar-width));
+    width: calc(100% - 40px - var(--toolbar-width));
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.controls-locked {
+    filter: brightness(.8);
+    pointer-events: none;
+}

@@ -1,0 +1,13 @@
+<div id="json-container">
+</div>
+<div class="edit-configs" onclick="local('editConfigs')">
+    <img src="../assets/img/edit.svg" alt="edit configs" title="Editar Configurações" />
+</div>
+<div id="raw-json-elements">
+    <textarea id="raw-json" onkeydown="local('activateControls')">
+</textarea>
+    <div class="raw-json-controls">
+        <button class="reset-button" onclick="local('cancelEdit')">Cancelar</button>
+        <button class="confirm-button controls-locked" id="confirm-raw-edit" onclick="local('saveEdit')">Salvar</button>
+    </div>
+</div>
