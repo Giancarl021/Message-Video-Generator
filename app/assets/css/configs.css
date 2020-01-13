@@ -28,6 +28,13 @@
 
 .json-string {
     color: rgb(184, 184, 68);
+    display: inline-block;
+}
+
+.color-viewer {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
 }
 
 .json-number {

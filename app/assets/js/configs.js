@@ -51,7 +51,7 @@ function loadConfigs() {
                 } else {
                     html += '<div class="json-object">';
                     for (const key in node) {
-                        html += `<div class="json-object-key">${key}:</div><div class="json-object-content">${parseNode(node[key])}</div>`;
+                        html += `<div class="json-object-key">${key}:</div><div class="json-object-content">${parseNode(node[key])}${key.toLowerCase().includes('color') && typeof node[key] === 'string' ? `<div class="color-viewer" style="background-color: ${node[key]}"></div>` : ''}</div>`;
                     }
                     html += '</div>';
                 }
