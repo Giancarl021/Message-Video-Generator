@@ -126,3 +126,7 @@
 #raw-json-elements ::-webkit-scrollbar-thumb:active {
     background: #333;
 }
+
+#raw-json-elements ::-webkit-scrollbar-corner {
+    background: var(--secondary-color);
+}
