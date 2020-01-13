@@ -42,8 +42,8 @@
         "wordWrapCharCount": 60
     },
     "video": {
-        "filename": null,
-        "outputPath": "C:\\Users\\Pichau\\Desktop",
+        "filename": "",
+        "outputPath": "",
         "openingImage": "",
         "endingImage": "",
         "slideDuration": "auto",
