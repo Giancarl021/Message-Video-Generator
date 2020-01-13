@@ -101,6 +101,9 @@ function closeRaw() {
     const raw = document.getElementById('raw-json').parentElement;
     raw.style.pointerEvents = 'none';
     raw.style.opacity = '0';
+    setTimeout(() => {
+        document.getElementById('raw-json').scrollTo(0, 0);
+    }, 300);
 }
 
 module.exports = {

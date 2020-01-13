@@ -109,3 +109,19 @@
     filter: brightness(.8);
     pointer-events: none;
 }
+
+#raw-json-elements ::-webkit-scrollbar-track {
+    background-color: var(--primary-color);
+}
+
+#raw-json-elements ::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+}
+  
+#raw-json-elements ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#raw-json-elements ::-webkit-scrollbar-thumb:active {
+    background: #333;
+}

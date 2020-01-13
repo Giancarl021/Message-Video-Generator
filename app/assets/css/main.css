@@ -94,3 +94,23 @@ body {
     min-height: 600px;
     min-width: 800px;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-secondary-color);
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: var(--primary-color);
+}
