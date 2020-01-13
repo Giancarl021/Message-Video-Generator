@@ -34,6 +34,7 @@
 .color-viewer {
     width: 12px;
     height: 12px;
+    border: 1px solid var(--primary-color);
     display: inline-block;
 }
 
