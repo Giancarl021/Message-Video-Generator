@@ -8,7 +8,7 @@ function load() {
 }
 
 function selectOutputDir() {
-    const {dialog} = require('electron').remote;
+    const { dialog } = require('electron').remote;
     const response = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
@@ -21,25 +21,33 @@ function selectOutputDir() {
     saveJSON(__configPath, config);
 }
 
-function startRender() {
-    if (!config.video.outputPath) {
-        showMsgBox('O diretório não foi selecionado!');
-        return;
-    }
-
+function toggleRender(args = {hasStopped: false}) {
     const toolbar = document.getElementById('toolbar');
-    toolbar.style.pointerEvents = 'none';
-    toolbar.style.opacity = '.6';
-    document.getElementById('start-rendering').innerText = 'Cancelar';
-    const videoMaker = require('./../../../video_maker/index');
-    config.video.filename = document.getElementById('filename').value;
 
-    saveJSON(__configPath, config);
-    videoMaker(document.getElementById('report-container'));
+    if (!isRendering) {
+        if (!config.video.outputPath) {
+            showMsgBox('O diretório não foi selecionado!');
+            return;
+        }
+
+        toolbar.style.pointerEvents = 'none';
+        toolbar.style.opacity = '.6';
+        document.getElementById('start-rendering').innerText = 'Cancelar';
+        const videoMaker = require('./../../../video_maker/index');
+        config.video.filename = document.getElementById('filename').value;
+        saveJSON(__configPath, config);
+        startRendering();
+    } else {
+        toolbar.style.pointerEvents = 'all';
+        toolbar.style.opacity = '1';
+        document.getElementById('start-rendering').innerText = 'Iniciar';
+        stopRendering(args.hasStopped);
+    }
+    // videoMaker(document.getElementById('report-container'));
 }
 
 module.exports = {
     load,
     selectOutputDir,
-    startRender
+    toggleRender
 };

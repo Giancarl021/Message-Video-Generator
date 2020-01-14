@@ -29,7 +29,7 @@ ipcMain.on('video-maker', (event, args) => {
     * }
     * 
     * */
-   
+
     if (args.action) {
         switch (args.action) {
             case 'start':
@@ -46,7 +46,13 @@ ipcMain.on('video-maker', (event, args) => {
                 console.log('Action not recognized: ' + args.action);
         }
     }
-    event.sender.send('start-video-maker', 'action made');
+    event.sender.send('video-maker', 'Action done: ' + args.action);
+});
+
+ipcMain.on('vidmk-status', (event, args) => {
+    if(!args.status) return;
+    console.log(args);
+    parseVidmkStatus(args.status);
 });
 
 // Video Maker Process Handlers
@@ -70,6 +76,14 @@ function showVideoMaker() {
     vidmk.show();
 }
 
+function parseVidmkStatus(status) {
+    switch(status) {
+        case 'killed':
+            win.webContents.send('video-maker-status', {status: 'killed'});
+            break;
+    }
+}
+
 // Window Constructors
 
 function createMainWindow() {
@@ -91,6 +105,7 @@ function createMainWindow() {
     win.loadFile('app/pages/main.html').catch(console.log);
 
     win.on('closed', () => {
+        killVideoMaker();
         win = null;
     });
 }
@@ -111,7 +126,6 @@ function createReportWindow() {
     vidmk.loadFile('app/pages/video-maker.html').catch(console.log);
 
     vidmk.on('closed', () => {
-        killVideoMaker(true);
         vidmk = null;
     });
 }

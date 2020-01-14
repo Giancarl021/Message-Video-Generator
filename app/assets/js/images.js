@@ -47,7 +47,7 @@ function changeMessageValue(args) {
 
 function loadMessageTile() {
     const imageConfig = config.image;
-    const {text, backgroundColor} = imageConfig;
+    const { text, backgroundColor } = imageConfig;
     const example = document.getElementById('message-example');
     const bgColorPicker = document.getElementById('background-color-picker');
     const fgColorPicker = document.getElementById('foreground-color-picker');
@@ -90,8 +90,8 @@ function invertColors() {
     fgColorPicker.style.backgroundColor = fgColorPicker.getElementsByTagName('input')[0].value = bg;
     bgColorPicker.style.backgroundColor = bgColorPicker.getElementsByTagName('input')[0].value = fg;
 
-    changeMessageValue({style: 'foreground', value: bg});
-    changeMessageValue({style: 'background', value: fg});
+    changeMessageValue({ style: 'foreground', value: bg });
+    changeMessageValue({ style: 'background', value: fg });
 }
 
 /* Image Tiles */
@@ -103,7 +103,7 @@ function fallbackImage(element) {
 }
 
 function loadImageControllers() {
-    const {openingImage, endingImage} = config.video;
+    const { openingImage, endingImage } = config.video;
     const img = {
         op: document.getElementById('op-img'),
         ed: document.getElementById('ed-img')
@@ -164,28 +164,16 @@ function addImage(args) {
         loadImageControllers();
 
         async function fitImage(filePath) {
-            const {useExec} = config.dev;
-            const {resolution} = config.video;
-            const gm = require('gm').subClass({imageMagick: true});
+            const { resolution } = config.video;
+            const gm = require('gm').subClass({ imageMagick: true });
             const path = require('path');
             const output = path.resolve(`video_maker/data/images/${args.target}.png`);
             return new Promise((resolve, reject) => {
-                if (useExec) {
-                    const {exec} = require('child_process');
-                    exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${output}"`, (err, stdout, stderr) => {
-                        if (err) return reject(err);
-                        return resolve(output);
-                    });
-                } else {
-                    gm(`"${filePath}"`)
-                        .resize(resolution.width, resolution.height)
-                        .background('black')
-                        .extent(resolution.width, resolution.height)
-                        .write(`"${output}"`, err => {
-                            if (err) return reject(err);
-                            return resolve(output);
-                        });
-                }
+                const { exec } = require('child_process');
+                exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${output}"`, (err, stdout, stderr) => {
+                    if (err) return reject(err);
+                    return resolve(output);
+                });
             });
         }
     };

@@ -1,11 +1,12 @@
-const {shell, ipcRenderer} = require('electron');
+const { shell, ipcRenderer } = require('electron');
 const fs = require('fs');
-const resolvePath = require('path').resolve;
 const transitionLoadTime = 200;
 let localRequire = null;
 
 let __configPath = 'video_maker/data/config.json';
 let config;
+
+let isRendering = false;
 
 // File
 
@@ -66,20 +67,35 @@ function cssRgbToHex(string) {
 
 // Video Maker communication
 
-ipcRenderer.on('start-video-maker', (event, args) => {
-    console.log(args)
-});
-ipcRenderer.on('stop-video-maker', (event, args) => {
+ipcRenderer.on('video-maker', (event, args) => {
     console.log(args)
 });
 
 function startRendering() {
-    ipcRenderer.send('start-video-maker');
+    ipcRenderer.send('video-maker', { action: 'start' });
+    ipcRenderer.send('video-maker', { action: 'show' });
+    isRendering = true;
 }
 
-function stopRendering() {
-    ipcRenderer.send('stop-video-maker', 'nothing');
+function showOutput() {
+    if (isRendering) {
+        ipcRenderer.send('video-maker', { action: 'show' });
+    }
 }
+
+function stopRendering(hasStopped) {
+    if (!hasStopped) {
+        ipcRenderer.send('video-maker', { action: 'kill' });
+    }
+    isRendering = false;
+}
+
+ipcRenderer.on('video-maker-status', (event, args) => {
+    if (!args.status) return;
+    if (args.status === 'killed') {
+        local('toggleRender', { hasStopped: true });
+    }
+});
 
 // Tabs calls
 
@@ -114,7 +130,7 @@ function showMsgBox(message) {
 function loadCSSFiles() {
     const path = 'app/assets/css';
     fs.readdirSync(path).forEach(css => {
-       if(!css.includes('@')) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
+        if (!css.includes('@')) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
     });
 }
 
@@ -151,24 +167,3 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
-let tabs = ['welcome', 'home', 'images', 'configs'];
-let selectedTab = 0;
-
-const interval = {
-    id: undefined,
-    time: 1000
-};
-
-
-function startTest() {
-    interval.id = setInterval(() => {
-        const i = selectedTab === tabs.length ? selectedTab = 0 : selectedTab++;
-        if (!selectedTab) selectedTab++;
-        loadTab(tabs[i], document.querySelector(`[alt="${tabs[i]}"]`));
-    }, interval.time);
-}
-
-function stopTest() {
-    clearInterval(interval.id);
-}
