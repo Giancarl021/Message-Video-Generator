@@ -1,4 +1,4 @@
-const {shell} = require('electron');
+const {shell, ipcRenderer} = require('electron');
 const fs = require('fs');
 const resolvePath = require('path').resolve;
 const transitionLoadTime = 200;
@@ -64,6 +64,23 @@ function cssRgbToHex(string) {
     }
 }
 
+// Video Maker communication
+
+ipcRenderer.on('start-video-maker', (event, args) => {
+    console.log(args)
+});
+ipcRenderer.on('stop-video-maker', (event, args) => {
+    console.log(args)
+});
+
+function startRendering() {
+    ipcRenderer.send('start-video-maker');
+}
+
+function stopRendering() {
+    ipcRenderer.send('stop-video-maker', 'nothing');
+}
+
 // Tabs calls
 
 function local(fn, args = undefined) {
@@ -97,7 +114,7 @@ function showMsgBox(message) {
 function loadCSSFiles() {
     const path = 'app/assets/css';
     fs.readdirSync(path).forEach(css => {
-        document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
+       if(!css.includes('@')) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
     });
 }
 
@@ -147,7 +164,7 @@ const interval = {
 function startTest() {
     interval.id = setInterval(() => {
         const i = selectedTab === tabs.length ? selectedTab = 0 : selectedTab++;
-        if(!selectedTab) selectedTab++;
+        if (!selectedTab) selectedTab++;
         loadTab(tabs[i], document.querySelector(`[alt="${tabs[i]}"]`));
     }, interval.time);
 }

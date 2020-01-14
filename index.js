@@ -1,7 +1,78 @@
-const {app, BrowserWindow, globalShortcut} = require('electron');
-let win;
+const {app, BrowserWindow, ipcMain} = require('electron');
+let win, vidmk;
 
-function createWindow() {
+// Stating the application
+
+app.on('ready', createMainWindow);
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+    killVideoMaker();
+});
+
+app.on('activate', () => {
+    if (win === null) {
+        createMainWindow();
+    }
+});
+
+// Async Window Communication
+
+ipcMain.on('video-maker', (event, args) => {
+    /*
+    * args
+    * {
+    *   action: 'start' | 'kill' | 'stop' | 'show' | undefined <default>,
+    *   verbose: 'none' | 'all' | 'status' | undefined <default>,
+    *
+    * }
+    * */
+    if (args.action) {
+        switch (args.action) {
+            case 'start':
+                startVideoMaker();
+                break;
+            case 'stop':
+            case 'kill':
+                killVideoMaker();
+                break;
+            case 'show':
+                showVideoMaker();
+                break;
+            default:
+                console.log('Action not recognized: ' + args.action);
+        }
+    }
+    event.sender.send('start-video-maker', 'action made');
+});
+
+// Video Maker Process Handlers
+
+function startVideoMaker() {
+    createReportWindow();
+}
+
+function killVideoMaker(willDie = false) {
+    if (!vidmk) return;
+    if (!willDie) try {
+        vidmk.close();
+        vidmk = null;
+    } catch (e) {
+        console.log(e);
+    }
+    ipcMain.send('video-maker', {stage: -1});
+}
+
+function showVideoMaker() {
+    if (!vidmk) return;
+    vidmk.show();
+}
+
+// Window Constructors
+
+function createMainWindow() {
     win = new BrowserWindow({
         width: 900,
         height: 710,
@@ -20,20 +91,28 @@ function createWindow() {
     win.loadFile('app/pages/main.html').catch(console.log);
 
     win.on('closed', () => {
-        win = null
+        win = null;
+        killVideoMaker();
     });
 }
 
-app.on('ready', createWindow);
+function createReportWindow() {
+    vidmk = new BrowserWindow({
+        width: 600,
+        height: 400,
+        webPreferences: {
+            nodeIntegration: true
+        },
+        frame: false,
+        show: false
+    });
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
+    vidmk.removeMenu();
 
-app.on('activate', () => {
-    if (win === null) {
-        createWindow();
-    }
-});
+    vidmk.loadFile('app/pages/video-maker.html').catch(console.log);
+
+    vidmk.on('closed', () => {
+        killVideoMaker(true);
+        vidmk = null;
+    });
+}
