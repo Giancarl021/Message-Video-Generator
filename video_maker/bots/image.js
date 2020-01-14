@@ -1,12 +1,10 @@
 const printer = require('./print');
-const gm = require('gm').subClass({ imageMagick: true });
 const imgDownloader = require('image-downloader');
 const data = require('../data/config');
-const { text, backgroundColor, wordWrapCharCount } = data.image;
-const { resolution } = data.video;
-const { phraseCount } = data.phrase;
-const { exec } = require('child_process');
-const { useExec } = data.dev;
+const {text, backgroundColor, wordWrapCharCount} = data.image;
+const {resolution} = data.video;
+const {phraseCount} = data.phrase;
+const {exec} = require('child_process');
 
 async function main(phrases) {
     printer.print('>> Initializing image bot');
@@ -33,30 +31,10 @@ async function generateImages(phrases) {
 
     async function textToImage(text, font, output) {
         return new Promise((resolve, reject) => {
-            if (useExec) {
-                exec(`magick -background ${backgroundColor} -fill ${font.color} -font ${font.font} -pointsize ${font.size} -gravity center label:"${text.replace(/\n/g, '\\n').replace(/"/g, '\\"')}" -gravity southeast -splice 20x20 -gravity northwest -splice 20x20 -bordercolor ${font.color} -border 3x3 ${output}`, (err, stdout, stderr) => {
-                    if (err) return reject(err);
-                    return resolve();
-                });
-            } else {
-                gm()
-                    .background(backgroundColor)
-                    .fill(font.color)
-                    .font(font.font)
-                    .pointSize(font.size)
-                    .gravity('center')
-                    .label(text.replace(/\n/g, '\\n'))
-                    .gravity('southeast')
-                    .out('splice', '20x20')
-                    .gravity('northwest')
-                    .out('splice', '20x20')
-                    .borderColor(font.color)
-                    .border(3, 3)
-                    .write(output, err => {
-                        if(err) return reject(err);
-                        return resolve();
-                    });
-            }
+            exec(`magick -background ${backgroundColor} -fill ${font.color} -font ${font.font} -pointsize ${font.size} -gravity center label:"${text.replace(/\n/g, '\\n').replace(/"/g, '\\"')}" -gravity southeast -splice 20x20 -gravity northwest -splice 20x20 -bordercolor ${font.color} -border 3x3 ${output}`, (err, stdout, stderr) => {
+                if (err) return reject(err);
+                return resolve();
+            });
         });
     }
 
@@ -102,22 +80,10 @@ async function mergeImages(paths) {
     async function mergeImage(background, foreground, output) {
 
         return new Promise((resolve, reject) => {
-            if (useExec) {
-                exec(`magick ${background} ${foreground} -gravity Center -composite ${output}`, (err, stdout, stderr) => {
-                    if (err) reject(err);
-                    resolve();
-                });
-            } else {
-                gm()
-                    .in(background)
-                    .in(foreground)
-                    .gravity('Center')
-                    .out('-composite')
-                    .write(output, err => {
-                        if (err) return reject(err);
-                        return resolve();
-                    });
-            }
+            exec(`magick ${background} ${foreground} -gravity Center -composite ${output}`, (err, stdout, stderr) => {
+                if (err) reject(err);
+                resolve();
+            });
         });
     }
 }

@@ -1,19 +1,32 @@
-a {
-    text-decoration: none;
+.link {
+    cursor: pointer;
     color: white;
+    user-select: none;
 }
 
-a:hover {
-    filter: brightness(.8);
-}
-
-a:active {
+.link:hover {
     filter: brightness(.6);
 }
 
-a.credits {
+.link:active {
+    filter: brightness(.4);
+}
+
+.link.credits {
     position: absolute;
     right: 0;
     bottom: 0;
     padding: 10px;
+}
+
+.obs {
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    border: var(--secondary-color) 2px solid;
+}
+
+.obs:hover {
+    filter: brightness(1.7);
 }

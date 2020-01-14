@@ -42,7 +42,7 @@
         "wordWrapCharCount": 60
     },
     "video": {
-        "filename": "",
+        "filename": "Teste",
         "outputPath": "C:\\Users\\Pichau\\Desktop",
         "openingImage": "",
         "endingImage": "",
@@ -52,8 +52,5 @@
             "height": 1080
         },
         "format": "mp4"
-    },
-    "dev": {
-        "useExec": true
     }
 }

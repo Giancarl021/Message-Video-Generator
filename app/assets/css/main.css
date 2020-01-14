@@ -38,6 +38,10 @@ body {
     flex-direction: column;
 }
 
+.no-select {
+    user-select: none;
+}
+
 #toolbar {
     width: var(--toolbar-width);
     height: 100%;
