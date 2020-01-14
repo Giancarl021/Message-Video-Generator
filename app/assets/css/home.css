@@ -13,7 +13,7 @@ input[disabled] {
     opacity: .8;
 }
 
-button {
+.home-button {
     width: calc(100%);
     font-size: 24px;
     background-color: transparent;
@@ -22,12 +22,12 @@ button {
     outline: none;
 }
 
-button:hover {
+.home-button:hover {
     background-color: var(--primary-color);
     color: var(--background-color);
 }
 
-button:active {
+.home-button:active {
     filter: brightness(.6);
 }
 

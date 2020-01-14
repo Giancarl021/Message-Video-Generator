@@ -4,6 +4,7 @@
 <head>
     <base href="./"/>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Message Video Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,9 +14,10 @@
 
 <body>
     <div id="toolbar" data-initial-tab="welcome">
+        <img class="toolbar-item config-button" src="../assets/img/config.svg" title="Configurações Avançadas" onclick="loadTab('configs', this)" alt="configs"/>
         <img class="toolbar-item" src="../assets/img/home.svg" title="Home" onclick="loadTab('home', this)" alt="home"/>
         <img class="toolbar-item" src="../assets/img/image.svg" title="Imagens" onclick="loadTab('images', this)" alt="images"/>
-        <img class="toolbar-item config-button" src="../assets/img/config.svg" title="Configurações Avançadas" onclick="loadTab('configs', this)" alt="configs"/>
+        <img class="toolbar-item" src="../assets/img/sources.svg" title="Fontes" onclick="loadTab('sources', this)" alt="sources"/>
     </div>
     <div id="content">
     </div>

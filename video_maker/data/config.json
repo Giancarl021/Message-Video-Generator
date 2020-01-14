@@ -36,14 +36,14 @@
         "text": {
             "font": "Arial",
             "size": "60",
-            "color": "#d76a06"
+            "color": "#cccccc"
         },
-        "backgroundColor": "#002f5e",
+        "backgroundColor": "#282838",
         "wordWrapCharCount": 60
     },
     "video": {
-        "filename": "Teste",
-        "outputPath": "C:\\Users\\Pichau\\Desktop",
+        "filename": "",
+        "outputPath": "",
         "openingImage": "",
         "endingImage": "",
         "slideDuration": "auto",
