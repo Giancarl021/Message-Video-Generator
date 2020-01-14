@@ -21,14 +21,15 @@ app.on('activate', () => {
 // Async Window Communication
 
 ipcMain.on('video-maker', (event, args) => {
-    /*
+    /* *
+    *
     * args
     * {
-    *   action: 'start' | 'kill' | 'stop' | 'show' | undefined <default>,
-    *   verbose: 'none' | 'all' | 'status' | undefined <default>,
-    *
+    *   action: 'start' | ['kill' | 'stop'] | 'show',
     * }
+    * 
     * */
+   
     if (args.action) {
         switch (args.action) {
             case 'start':
@@ -54,15 +55,14 @@ function startVideoMaker() {
     createReportWindow();
 }
 
-function killVideoMaker(willDie = false) {
+function killVideoMaker() {
     if (!vidmk) return;
-    if (!willDie) try {
+    try {
         vidmk.close();
         vidmk = null;
     } catch (e) {
         console.log(e);
     }
-    ipcMain.send('video-maker', {stage: -1});
 }
 
 function showVideoMaker() {
@@ -92,7 +92,6 @@ function createMainWindow() {
 
     win.on('closed', () => {
         win = null;
-        killVideoMaker();
     });
 }
 
