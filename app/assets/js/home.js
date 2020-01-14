@@ -44,26 +44,29 @@ function toggleRender(args = {hasStopped: false}) {
     }
 }
 
-function updateRenderProcess(code) {
+function updateRenderProcess(args) {
+    if(!args.code) return;
+    const code = args.code;
     const [processType, source, processMessage = 'Processando...'] = code.split('::');
     switch(processType) {
         case 'bot-start':
             // selectBotBar(source);
+            console.log('BOT START: ' + source);
             if(source === 'main') {
                 // Process started
+                console.log('Everything started');
             }
             break;
         case 'bot-end':
             // completeBotBar(source);
+            console.log('BOT ENDED: ' + source);
             if(source === 'main') {
-                // Process ended
+                console.log('Everything ended');
             }
             break;
         case 'bot-process':
-            // changeProcessinBotBar(source, processMessage);
-            break;
-        case 'bot-error':
-            // Something went wrong
+            // changeProcessInBotBar(source, processMessage);
+            console.log('BOT DOING: ' + source + ' > ' + processMessage);
             break;
     }
 }

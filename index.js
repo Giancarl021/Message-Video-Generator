@@ -96,6 +96,8 @@ function createReportWindow() {
     vidmk = new BrowserWindow({
         width: 600,
         height: 400,
+        minWidth: 600,
+        minHeight: 400,
         webPreferences: {
             nodeIntegration: true
         },

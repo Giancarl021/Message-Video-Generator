@@ -20,12 +20,12 @@ body {
     min-height: 100vh;
     background-color: var(--background-color);
     border: 1px solid var(--secondary-color);
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 #output {
     width: 100%;
-    word-break: break-all;
+    height: calc(100% - var(--toolbar-height));
 }
 
 #title-bar {
@@ -69,6 +69,7 @@ body {
     border-left: 1px solid var(--secondary-color);
     border-bottom: none;
     transition: .3s;
+    z-index: 1;
 }
 
 #close-button:hover {
@@ -77,4 +78,9 @@ body {
 
 #close-button:active {
     background-color: #FFF6;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }

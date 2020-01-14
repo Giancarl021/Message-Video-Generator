@@ -7,7 +7,14 @@ function killProcess() {
 }
 
 function init() {
-    videoMaker(document.getElementById('output'));
+    videoMaker(document.getElementById('output'))
+        .then(() => {
+            killProcess();
+        })
+        .catch((err) => {
+            ipcRenderer.send('vidmk-status', { status: 'error', message: err.message })
+            killProcess();
+        });
 }
 
 document.addEventListener('DOMContentLoaded', init);
