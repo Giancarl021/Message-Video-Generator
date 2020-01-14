@@ -25,18 +25,25 @@ function editConfigs() {
     raw.parentElement.style.opacity = '1';
 }
 
-function activateControls() {
+function activateControls(args) {
+    if(!args.event) return;
+    if(args.event.key.length > 1 && !['Backspace', 'Delete'].includes(args.event.key)) return;
     const controls = document.getElementById('confirm-raw-edit');
     if(controls.classList.contains('controls-locked')) {
         controls.className = controls.className.replace('controls-locked', '');
     }
 }
 
+function deactivateControls() {
+    const controls = document.getElementById('confirm-raw-edit');
+    if(!controls.classList.contains('controls-locked')) {
+        controls.className += ' controls-locked';
+    }
+}
+
 function loadConfigs() {
     const view = document.getElementById('json-container');
-    const element = parseNode(config);
-    view.innerHTML = '';
-    view.insertAdjacentHTML('beforeend', element);
+    view.innerHTML = parseNode(config);
     function parseNode(node) {
         let html = '';
         if (typeof node === 'object') {
@@ -88,11 +95,13 @@ function loadConfigs() {
 function saveEdit() {
     const data = JSON.parse(document.getElementById('raw-json').value);
     saveJSON(__configPath, data);
+    deactivateControls();
     closeRaw();
 }
 
 function cancelEdit() {
     editConfigs();
+    deactivateControls();
     closeRaw();
 }
 
@@ -108,10 +117,8 @@ function closeRaw() {
 
 module.exports = {
     load,
-    loadConfigs,
     activateControls,
     editConfigs,
     cancelEdit,
-    closeRaw,
     saveEdit
 };

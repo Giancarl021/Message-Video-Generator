@@ -1,10 +1,10 @@
 <div id="json-container">
 </div>
 <div class="edit-configs" onclick="local('editConfigs')">
-    <img src="../assets/img/edit.svg" alt="edit configs" title="Editar Configurações" />
+    <img src="../assets/img/edit.svg" alt="edit configs" title="Editar Configurações"/>
 </div>
 <div id="raw-json-elements">
-    <textarea id="raw-json" onkeypress="local('activateControls')">
+    <textarea id="raw-json" onkeyup="local('activateControls', {event: event})">
 </textarea>
     <div class="raw-json-controls">
         <button class="reset-button" onclick="local('cancelEdit')">Cancelar</button>
