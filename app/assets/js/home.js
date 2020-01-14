@@ -42,11 +42,35 @@ function toggleRender(args = {hasStopped: false}) {
         document.getElementById('start-rendering').innerText = 'Iniciar';
         stopRendering(args.hasStopped);
     }
-    // videoMaker(document.getElementById('report-container'));
+}
+
+function updateRenderProcess(code) {
+    const [processType, source, processMessage = 'Processando...'] = code.split('::');
+    switch(processType) {
+        case 'bot-start':
+            // selectBotBar(source);
+            if(source === 'main') {
+                // Process started
+            }
+            break;
+        case 'bot-end':
+            // completeBotBar(source);
+            if(source === 'main') {
+                // Process ended
+            }
+            break;
+        case 'bot-process':
+            // changeProcessinBotBar(source, processMessage);
+            break;
+        case 'bot-error':
+            // Something went wrong
+            break;
+    }
 }
 
 module.exports = {
     load,
     selectOutputDir,
-    toggleRender
+    toggleRender,
+    updateRenderProcess
 };

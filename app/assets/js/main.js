@@ -94,6 +94,8 @@ ipcRenderer.on('video-maker-status', (event, args) => {
     if (!args.status) return;
     if (args.status === 'killed') {
         local('toggleRender', { hasStopped: true });
+    } else if (args.status === 'info') {
+        local('updateRenderProcess', { code: args.message });
     }
 });
 

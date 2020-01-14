@@ -8,13 +8,16 @@ const {exec} = require('child_process');
 
 async function main(phrases) {
     printer.print('>> Initializing image bot');
+    printer.sendInfo('bot-start::image');
     const paths = await generateImages(phrases);
     await downloadRandomBackgrounds(phraseCount);
+    printer.sendInfo('bot-end::image');
     return await mergeImages(paths);
 }
 
 async function generateImages(phrases) {
     printer.print('>>> Generating base images');
+    printer.sendInfo('bot-process::image::generating-fg');
     let i = 0;
     const paths = [];
     for (const phrase of phrases) {
@@ -67,6 +70,7 @@ async function generateImages(phrases) {
 
 async function mergeImages(paths) {
     printer.print('>>> Merging images');
+    printer.sendInfo('bot-process::image::merging-img');
     let i = 0;
     const outputs = [];
     for (const path of paths) {
@@ -90,6 +94,7 @@ async function mergeImages(paths) {
 
 async function downloadRandomBackgrounds(n) {
     printer.print('>>> Downloading backgrounds');
+    printer.sendInfo('bot-process::image::donwloading-bg');
     const destinationPath = 'video_maker/temp/background';
 
     for (let i = 0; i < n; i++) {

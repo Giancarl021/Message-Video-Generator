@@ -7,9 +7,11 @@ const phraseSrc = configs.src.phrase;
 
 async function main() {
     printer.print('>> Initializing phrase bot');
+    printer.sendInfo('bot-start::phrase');
     let consecutiveMiss = 0, skip;
     const phrases = [];
     printer.print('>>> Fetching phrases');
+    printer.sendInfo('bot-process::phrase::downloading-phrases');
     while (phrases.length < phraseCount) {
         skip = false;
         if (consecutiveMiss === 15) {
@@ -47,6 +49,7 @@ async function main() {
             phrases.push(phrase);
         }
     }
+    printer.sendInfo('bot-end::phrase');
     return phrases;
 }
 

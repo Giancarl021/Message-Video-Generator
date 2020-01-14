@@ -6,16 +6,8 @@ function killProcess() {
     remote.getCurrentWindow().close();
 }
 
-function sendInfo(message) {
-    ipcRenderer.send('vidmk-status', { status: 'info', message: message });
-}
-
 function init() {
     videoMaker(document.getElementById('output'));
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
-module.exports = {
-    sendInfo
-};

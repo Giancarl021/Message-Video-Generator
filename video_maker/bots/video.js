@@ -90,7 +90,9 @@ async function getSlideDuration(data, n) {
 
 async function renderVideo(data, images, options) {
     printer.print('>>> Rendering video');
+    printer.sendInfo('bot-start::video');
     const filename = videoOptions.filename || Date.now();
+    printer.sendInfo('bot-process::video::rendering');
     return new Promise((resolve, reject) => {
         videoshow(images, options)
             .audio(data.music.path)
@@ -98,6 +100,7 @@ async function renderVideo(data, images, options) {
             .on('error', reject)
             .on('end', () => {
                 printer.print('>>> Video successfully rendered');
+                printer.sendInfo('bot-end::video');
                 resolve();
             });
     });

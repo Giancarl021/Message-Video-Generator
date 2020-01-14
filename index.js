@@ -42,8 +42,7 @@ ipcMain.on('video-maker', (event, args) => {
 
 ipcMain.on('vidmk-status', (event, args) => {
     if(!args.status) return;
-    console.log(args);
-    parseVidmkStatus(args.status);
+    win.webContents.send('video-maker-status', args);
 });
 
 // Video Maker Process Handlers
@@ -65,14 +64,6 @@ function killVideoMaker() {
 function showVideoMaker() {
     if (!vidmk) return;
     vidmk.show();
-}
-
-function parseVidmkStatus(status) {
-    switch(status) {
-        case 'killed':
-            win.webContents.send('video-maker-status', {status: 'killed'});
-            break;
-    }
 }
 
 // Window Constructors

@@ -1,3 +1,4 @@
+const printer = require('./print');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
@@ -14,7 +15,9 @@ async function main() {
 
 async function fetchMusic() {
     console.log('>>> Searching music');
-    const {pages, elements} = musicSrc;
+    printer.sendInfo('bot-start::music');
+    printer.sendInfo('bot-process::music::finding-music');
+    const { pages, elements } = musicSrc;
     const $ = await getHtml(musicSrc.url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.suffix);
     const musics = $(elements.parentElement);
     const index = Math.floor(Math.random() * musics.length);
@@ -22,37 +25,40 @@ async function fetchMusic() {
     const url = $(music).find(elements.musicElement).attr(elements.musicUrlAttribute);
     const destination = 'video_maker/temp/music/song.mp3';
     console.log('>>> Downloading music');
+    printer.sendInfo('bot-process::music::downloading-music');
     await fetchData(url, destination);
-    return {url: url, path: destination};
+    printer.sendInfo('bot-end::music');
+    return { url: url, path: destination };
 
-    async function getHtml(url) {
-        const response = await axios.get(url);
+}
+
+async function getHtml(url) {
+    const response = await axios.get(url);
+    if (response.status === 200) {
+        return cheerio.load(response.data);
+    } else {
+        return null;
+    }
+}
+
+async function fetchData(url, destination) {
+    const response = await axios({
+        method: 'get',
+        url: url,
+        responseType: 'stream'
+    });
+    return new Promise((resolve, reject) => {
+        const fileWriter = fs.createWriteStream(destination);
+        fileWriter.on('finish', () => {
+            fileWriter.close();
+            return resolve();
+        });
         if (response.status === 200) {
-            return cheerio.load(response.data);
+            response.data.pipe(fileWriter);
         } else {
-            return null;
+            return reject('Failed fetching music file');
         }
-    }
-
-    async function fetchData(url, destination) {
-        const response = await axios({
-            method: 'get',
-            url: url,
-            responseType: 'stream'
-        });
-        return new Promise((resolve, reject) => {
-            const fileWriter = fs.createWriteStream(destination);
-            fileWriter.on('finish', () => {
-                fileWriter.close();
-                return resolve();
-            });
-            if (response.status === 200) {
-                response.data.pipe(fileWriter);
-            } else {
-                return reject('Failed fetching music file');
-            }
-        });
-    }
+    });
 }
 
 function getRandomIndex(min, max) {
@@ -77,7 +83,7 @@ async function getMusicData(url) {
             }
         }
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
         return response.data.bpm;
     } else {
         return null;
