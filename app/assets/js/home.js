@@ -33,7 +33,6 @@ function toggleRender(args = {hasStopped: false}) {
         toolbar.style.pointerEvents = 'none';
         toolbar.style.opacity = '.6';
         document.getElementById('start-rendering').innerText = 'Cancelar';
-        const videoMaker = require('./../../../video_maker/index');
         config.video.filename = document.getElementById('filename').value;
         saveJSON(__configPath, config);
         startRendering();

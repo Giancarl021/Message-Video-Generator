@@ -21,15 +21,6 @@ app.on('activate', () => {
 // Async Window Communication
 
 ipcMain.on('video-maker', (event, args) => {
-    /* *
-    *
-    * args
-    * {
-    *   action: 'start' | ['kill' | 'stop'] | 'show',
-    * }
-    * 
-    * */
-
     if (args.action) {
         switch (args.action) {
             case 'start':
@@ -122,6 +113,8 @@ function createReportWindow() {
     });
 
     vidmk.removeMenu();
+
+    vidmk.webContents.openDevTools();
 
     vidmk.loadFile('app/pages/video-maker.html').catch(console.log);
 
