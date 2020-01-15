@@ -69,18 +69,42 @@ input[disabled] {
     width: 100%;
     height: calc(100% - 200px);
     display: flex;
-    justify-content: space-evenly;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
 }
 
-.report-item {
-    width: calc(100% - 40px);
+.report-container > * {
+    margin: 10px 0;
+}
+
+.process-status {
+    width: calc(100% - 80px);
+    padding: 20px;
+    justify-self: start;
     background-color: #0002;
 }
 
-.report-item h1 {
+#process-name {
     width: fit-content;
+    padding: 5px 0;
+    margin: 0 0 10px 0;
+}
+
+#subprocess-name {
+    width: calc(100% - 10px);
+    margin: 0;
+    padding: 5px;
+    color: var(--secondary-color);
+    background-color: #0002;
+}
+
+.process-checklist {
+    width: calc(100% - 80px);
     padding: 20px;
-    font-size: 20px;
+    background-color: #0004;
+}
+
+.process {
+
 }

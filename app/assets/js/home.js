@@ -35,40 +35,51 @@ function toggleRender(args = {hasStopped: false}) {
         document.getElementById('start-rendering').innerText = 'Cancelar';
         config.video.filename = document.getElementById('filename').value;
         saveJSON(__configPath, config);
+        document.getElementById('process-name').innerText = 'Inicializando...';
+        document.getElementById('subprocess-name').innerText = 'Carregando recursos...';
         startRendering();
     } else {
         toolbar.style.pointerEvents = 'all';
         toolbar.style.opacity = '1';
         document.getElementById('start-rendering').innerText = 'Iniciar';
+        document.getElementById('process-name').innerText = 'Processo Interrompido';
         stopRendering(args.hasStopped);
     }
 }
 
 function updateRenderProcess(args) {
     if(!args.code) return;
+
     const code = args.code;
     const [processType, source, processMessage = 'Processando...'] = code.split('::');
+
+    let target;
+    let text = '...';
+
     switch(processType) {
         case 'bot-start':
             // selectBotBar(source);
-            console.log('BOT START: ' + source);
-            if(source === 'main') {
-                // Process started
-                console.log('Everything started');
-            }
+            target = document.getElementById('process-name');
+
+            if(source === 'main') return;
+            text = 'Processando ' + source;
             break;
         case 'bot-end':
             // completeBotBar(source);
-            console.log('BOT ENDED: ' + source);
+            target = document.getElementById('process-name');
             if(source === 'main') {
-                console.log('Everything ended');
+                text = 'Vídeo renderizado';
+            } else {
+                text = source + ' finalizou sua tarefa';
             }
             break;
         case 'bot-process':
             // changeProcessInBotBar(source, processMessage);
-            console.log('BOT DOING: ' + source + ' > ' + processMessage);
+            target = document.getElementById('subprocess-name');
+            text = processMessage;
             break;
     }
+    target.innerText = text;
 }
 
 module.exports = {

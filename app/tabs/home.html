@@ -2,22 +2,25 @@
     <div class="inputs">
         <div class="input">
             <label for="filename">Nome do arquivo</label>
-            <input type="text" id="filename"/>
+            <input type="text" id="filename" />
         </div>
         <div class="input">
             <label for="path">Diretório de saída</label>
-            <input type="text" id="output-directory" disabled/>
+            <input type="text" id="output-directory" disabled />
             <button class="home-button" onclick="local('selectOutputDir')">Selecionar Diretório de Saída</button>
         </div>
     </div>
     <button class="home-button" id="start-rendering" onclick="local('toggleRender')">Iniciar</button>
 </div>
 <div class="report-container">
-    <div class="report-item">
-        <h1>Processo Iniciado</h1>
+    <div class="process-status">
+        <h1 id="process-name">Clique no botão para Iniciar</h1>
+        <h2 id="subprocess-name">Aguardando inicialização</h2>
     </div>
-
-    <div class="report-item">
-        <h1>Processo Finalizado</h1>
+    <div class="process-checklist">
+        <div class="process">
+            <h1>Nome do Processo</h1>
+            <span></span>
+        </div>
     </div>
 </div>
