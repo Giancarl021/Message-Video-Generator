@@ -1,10 +1,15 @@
 function load() {
     const dir = document.getElementById('output-directory');
     dir.value = config.video.outputPath || 'Não definido';
-    loadTransitions({
-        selector: 'button',
-        value: 'background-color .3s, color .3s, filter .1s'
-    });
+    loadTransitions(
+        {
+            selector: 'button',
+            value: 'background-color .3s, color .3s, filter .1s'
+        },
+        {
+            selector: '#show-process-window',
+            value: 'background-color .15s'
+        });
 }
 
 function selectOutputDir() {
@@ -21,7 +26,7 @@ function selectOutputDir() {
     saveJSON(__configPath, config);
 }
 
-function toggleRender(args = {hasStopped: false}) {
+function toggleRender(args = { hasStopped: false }) {
     const toolbar = document.getElementById('toolbar');
 
     if (!isRendering) {
@@ -43,12 +48,13 @@ function toggleRender(args = {hasStopped: false}) {
         toolbar.style.opacity = '1';
         document.getElementById('start-rendering').innerText = 'Iniciar';
         document.getElementById('process-name').innerText = 'Processo Interrompido';
+        document.getElementById('subprocess-name').innerText = 'Aguradando inicialização';
         stopRendering(args.hasStopped);
     }
 }
 
 function updateRenderProcess(args) {
-    if(!args.code) return;
+    if (!args.code) return;
 
     const code = args.code;
     const [processType, source, processMessage = 'Processando...'] = code.split('::');
@@ -56,18 +62,18 @@ function updateRenderProcess(args) {
     let target;
     let text = '...';
 
-    switch(processType) {
+    switch (processType) {
         case 'bot-start':
             // selectBotBar(source);
             target = document.getElementById('process-name');
 
-            if(source === 'main') return;
+            if (source === 'main') return;
             text = 'Processando ' + source;
             break;
         case 'bot-end':
             // completeBotBar(source);
             target = document.getElementById('process-name');
-            if(source === 'main') {
+            if (source === 'main') {
                 text = 'Vídeo renderizado';
             } else {
                 text = source + ' finalizou sua tarefa';

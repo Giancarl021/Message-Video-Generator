@@ -79,6 +79,7 @@ input[disabled] {
 }
 
 .process-status {
+    position: relative;
     width: calc(100% - 80px);
     padding: 20px;
     justify-self: start;
@@ -97,6 +98,24 @@ input[disabled] {
     padding: 5px;
     color: var(--secondary-color);
     background-color: #0002;
+}
+
+#show-process-window {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid var(--primary-color);
+}
+
+#show-process-window:hover {
+    background-color: #0002;
+}
+
+#show-process-window:active {
+    background-color: #0004;
 }
 
 .process-checklist {

@@ -73,13 +73,14 @@ ipcRenderer.on('video-maker', (event, args) => {
 
 function startRendering() {
     ipcRenderer.send('video-maker', { action: 'start' });
-    ipcRenderer.send('video-maker', { action: 'show' });
     isRendering = true;
 }
 
 function showOutput() {
     if (isRendering) {
         ipcRenderer.send('video-maker', { action: 'show' });
+    } else {
+        showMsgBox('Não está renderizando');
     }
 }
 
