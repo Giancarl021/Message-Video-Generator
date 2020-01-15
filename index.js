@@ -21,23 +21,27 @@ app.on('activate', () => {
 // Async Window Communication
 
 ipcMain.on('video-maker', (event, args) => {
+    let reply = 'Nothing happened';
     if (args.action) {
         switch (args.action) {
             case 'start':
                 startVideoMaker();
+                reply = 'Starting Video Maker';
                 break;
             case 'stop':
             case 'kill':
                 killVideoMaker();
+                reply = 'Stopping Video Maker';
                 break;
             case 'show':
                 showVideoMaker();
+                reply = 'Showing Video Maker';
                 break;
             default:
-                console.log('Action not recognized: ' + args.action);
+                reply = 'Action not recognized: ' + args.action;
         }
     }
-    event.sender.send('video-maker', 'Action done: ' + args.action);
+    event.sender.send('video-maker', reply);
 });
 
 ipcMain.on('vidmk-status', (event, args) => {
