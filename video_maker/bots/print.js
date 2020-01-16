@@ -2,7 +2,7 @@ let __printElement;
 const { ipcRenderer } = require('electron');
 
 function print(message) {
-    __printElement.innerHTML += message + '<br/>';
+    __printElement.innerHTML += `${message}<br/>`;
 }
 
 function sendInfo(message) {

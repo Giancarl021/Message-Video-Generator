@@ -72,6 +72,7 @@ ipcRenderer.on('video-maker', (event, args) => {
 });
 
 function startRendering() {
+    ipcRenderer.on('video-maker-status', __vidmkStatusListener);
     ipcRenderer.send('video-maker', { action: 'start' });
     isRendering = true;
 }
@@ -89,9 +90,10 @@ function stopRendering(hasStopped) {
         ipcRenderer.send('video-maker', { action: 'kill' });
     }
     isRendering = false;
+    ipcRenderer.removeAllListeners('video-maker-status');
 }
 
-ipcRenderer.on('video-maker-status', (event, args) => {
+function __vidmkStatusListener(event, args) {
     if (!args.status) return;
     if (args.status === 'killed') {
         local('toggleRender', { hasStopped: true });
@@ -100,7 +102,7 @@ ipcRenderer.on('video-maker-status', (event, args) => {
     } else if (args.status === 'error') {
         showMsgBox(args.message);
     }
-});
+}
 
 // Tabs calls
 

@@ -11,9 +11,13 @@ function init() {
             killProcess();
         })
         .catch((err) => {
-            ipcRenderer.send('vidmk-status', { status: 'error', message: err.message })
+            ipcRenderer.send('vidmk-status', { status: 'error', message: err.message });
             killProcess();
         });
+    const output = document.getElementById('output');
+    setInterval(() => {
+        window.scrollTo(0, output.scrollHeight);
+    }, 0);
 }
 
 document.addEventListener('DOMContentLoaded', init);

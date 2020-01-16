@@ -112,6 +112,8 @@ function createReportWindow() {
 
     vidmk.removeMenu();
 
+    vidmk.webContents.openDevTools();
+
     vidmk.loadFile('app/pages/video-maker.html').catch(console.log);
 
     vidmk.on('closed', () => {

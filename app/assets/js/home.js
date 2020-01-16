@@ -34,7 +34,6 @@ function toggleRender(args = { hasStopped: false }) {
             showMsgBox('O diretório não foi selecionado!');
             return;
         }
-
         toolbar.style.pointerEvents = 'none';
         toolbar.style.opacity = '.6';
         document.getElementById('start-rendering').innerText = 'Cancelar';
