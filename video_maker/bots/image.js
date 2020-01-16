@@ -94,7 +94,7 @@ async function mergeImages(paths) {
 
 async function downloadRandomBackgrounds(n) {
     printer.print('>>> Downloading backgrounds');
-    printer.sendInfo('bot-process::image::donwloading-bg');
+    printer.sendInfo('bot-process::image::downloading-bg');
     const destinationPath = 'video_maker/temp/background';
 
     for (let i = 0; i < n; i++) {

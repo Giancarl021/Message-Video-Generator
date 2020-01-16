@@ -72,24 +72,80 @@ function updateRenderProcess(args) {
             if (source === 'main') return;
             startRunningProcess(source);
             target = document.getElementById('process-name');
-            text = 'Processando ' + source;
+            text = 'Processando ' + parseBotName(source);
             break;
         case 'bot-end':
-            markProcessDone(source);
+            if (source !== 'main') markProcessDone(source);
             target = document.getElementById('process-name');
             if (source === 'main') {
                 text = 'Vídeo renderizado';
             } else {
-                text = source + ' finalizou sua tarefa';
+                text = 'Finalização do Processamento de ' + source;
             }
             break;
         case 'bot-process':
-            // changeProcessInBotBar(source, processMessage);
             target = document.getElementById('subprocess-name');
-            text = processMessage;
+            text = parseBotMessage(processMessage);
             break;
     }
     target.innerText = text;
+}
+
+function parseBotName(botName) {
+    let name;
+    switch (botName) {
+        case 'cleaner':
+            name = 'Inicialização';
+            break;
+        case 'phrase':
+            name = 'Frases';
+            break;
+        case 'image':
+            name = 'Imagens';
+            break;
+        case 'music':
+            name = 'Música';
+            break;
+        case 'video':
+            name = 'Vídeo';
+            break;
+        default:
+            name = '. . .';
+    }
+    return name;
+}
+
+function parseBotMessage(text) {
+    let message;
+    switch (text) {
+        case 'cleaning-temp':
+            message = 'Limpando arquivos temporários';
+            break;
+        case 'downloading-phrases':
+            message = 'Baixando frases';
+            break;
+        case 'generating-fg':
+            message = 'Gerando imagens com frases';
+            break;
+        case 'downloading-bg':
+            message = 'Baixando imagens de fundo';
+            break;
+        case 'merging-img':
+            message = 'Mesclando imagens de frases com imagens de fundo';
+            break;
+        case 'finding-music':
+            message = 'Buscando música';
+            break;
+        case 'downloading-music':
+            message = 'Baixando música';
+            break;
+        case 'rendering':
+            message = 'Renderizando vídeo';
+            break;
+        default:
+            message = '. . .';
+    }
+    return message;
 }
 
 function startRunningProcess(id) {
@@ -103,7 +159,7 @@ function markProcessDone(id) {
 
 function removeClass(selector, className) {
     [...document.querySelectorAll(selector)].forEach(e => {
-        if(e.classList.contains(className)) {
+        if (e.classList.contains(className)) {
             e.className = e.className.replace(className, '');
         }
     });
