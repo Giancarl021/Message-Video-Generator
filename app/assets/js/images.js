@@ -4,7 +4,7 @@ function load() {
     loadTransitions(
         {
             selector: '#message-example',
-            value: 'color .3s'
+            value: 'color .3s, background-color .5s'
         },
         {
             selector: '.message-control-button, .image-control',
