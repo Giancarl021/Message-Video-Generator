@@ -88,6 +88,7 @@ input[disabled] {
     padding: 20px;
     justify-self: start;
     background-color: #0002;
+    user-select: none;
 }
 
 #process-name {
