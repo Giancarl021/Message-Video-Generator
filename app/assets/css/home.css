@@ -13,6 +13,10 @@ input[disabled] {
     opacity: .8;
 }
 
+#output-directory {
+    cursor: text;
+}
+
 .home-button {
     width: calc(100%);
     font-size: 24px;
@@ -125,5 +129,36 @@ input[disabled] {
 }
 
 .process {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 20%;
+    flex-direction: row-reverse;
+    user-select: none;
+}
 
+.process h1 {
+    width: fit-content;
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.process span {
+    width: 20px;
+    height: 20px;
+    background-color: var(--background-secondary-color);
+}
+
+.process-running > span {
+    animation: process-running-animation ease-in-out infinite alternate 1s;
+}
+
+.process-done > span {
+    background-color: var(--primary-color);
+}
+
+@keyframes process-running-animation {
+    from { background-color: var(--background-secondary-color)}
+    to { background-color: var(--secondary-color)}
 }

@@ -11,7 +11,6 @@ async function main(phrases) {
     printer.sendInfo('bot-start::image');
     const paths = await generateImages(phrases);
     await downloadRandomBackgrounds(phraseCount);
-    printer.sendInfo('bot-end::image');
     return await mergeImages(paths);
 }
 
@@ -79,6 +78,7 @@ async function mergeImages(paths) {
         outputs.push(output);
     }
 
+    printer.sendInfo('bot-end::image');
     return outputs;
 
     async function mergeImage(background, foreground, output) {

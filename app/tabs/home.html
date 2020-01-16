@@ -2,11 +2,11 @@
     <div class="inputs">
         <div class="input">
             <label for="filename">Nome do arquivo</label>
-            <input type="text" id="filename" />
+            <input type="text" id="filename"/>
         </div>
         <div class="input">
             <label for="path">Diretório de saída</label>
-            <input type="text" id="output-directory" disabled />
+            <input type="text" id="output-directory" disabled/>
             <button class="home-button" onclick="local('selectOutputDir')">Selecionar Diretório de Saída</button>
         </div>
     </div>
@@ -16,11 +16,29 @@
     <div class="process-status">
         <h1 id="process-name">Clique no botão para Iniciar</h1>
         <h2 id="subprocess-name">Aguardando inicialização</h2>
-        <div id="show-process-window" onclick="showOutput()"><img src="../assets/img/code.svg" title="Visualizar saída bruta" alt="view-brute-output"/></div>
+        <div id="show-process-window" onclick="showOutput()"><img src="../assets/img/code.svg"
+                                                                  title="Visualizar saída bruta"
+                                                                  alt="view-brute-output"/></div>
     </div>
     <div class="process-checklist">
-        <div class="process">
-            <h1>Nome do Processo</h1>
+        <div class="process" id="cleaner">
+            <h1>Preparação do ambiente</h1>
+            <span></span>
+        </div>
+        <div class="process" id="phrase">
+            <h1>Carregamento das frases</h1>
+            <span></span>
+        </div>
+        <div class="process" id="image">
+            <h1>Carregamento das imagens</h1>
+            <span></span>
+        </div>
+        <div class="process" id="music">
+            <h1>Carregamento das músicas</h1>
+            <span></span>
+        </div>
+        <div class="process" id="video">
+            <h1>Renderização do vídeo</h1>
             <span></span>
         </div>
     </div>

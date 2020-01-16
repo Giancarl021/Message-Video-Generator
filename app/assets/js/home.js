@@ -9,11 +9,15 @@ function load() {
         {
             selector: '#show-process-window',
             value: 'background-color .15s'
+        },
+        {
+            selector: '.process > span',
+            value: 'background-color .3s'
         });
 }
 
 function selectOutputDir() {
-    const { dialog } = require('electron').remote;
+    const {dialog} = require('electron').remote;
     const response = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
@@ -26,7 +30,7 @@ function selectOutputDir() {
     saveJSON(__configPath, config);
 }
 
-function toggleRender(args = { hasStopped: false }) {
+function toggleRender(args = {hasStopped: false}) {
     const toolbar = document.getElementById('toolbar');
 
     if (!isRendering) {
@@ -48,6 +52,8 @@ function toggleRender(args = { hasStopped: false }) {
         document.getElementById('start-rendering').innerText = 'Iniciar';
         document.getElementById('process-name').innerText = 'Processo Interrompido';
         document.getElementById('subprocess-name').innerText = 'Aguradando inicialização';
+        removeClass('.process', 'process-running');
+        removeClass('.process', 'process-done');
         stopRendering(args.hasStopped);
     }
 }
@@ -63,14 +69,13 @@ function updateRenderProcess(args) {
 
     switch (processType) {
         case 'bot-start':
-            // selectBotBar(source);
-            target = document.getElementById('process-name');
-
             if (source === 'main') return;
+            startRunningProcess(source);
+            target = document.getElementById('process-name');
             text = 'Processando ' + source;
             break;
         case 'bot-end':
-            // completeBotBar(source);
+            markProcessDone(source);
             target = document.getElementById('process-name');
             if (source === 'main') {
                 text = 'Vídeo renderizado';
@@ -85,6 +90,23 @@ function updateRenderProcess(args) {
             break;
     }
     target.innerText = text;
+}
+
+function startRunningProcess(id) {
+    removeClass('.process', 'process-running');
+    document.getElementById(id).className += ' process-running';
+}
+
+function markProcessDone(id) {
+    document.getElementById(id).className += ' process-done';
+}
+
+function removeClass(selector, className) {
+    [...document.querySelectorAll(selector)].forEach(e => {
+        if(e.classList.contains(className)) {
+            e.className = e.className.replace(className, '');
+        }
+    });
 }
 
 module.exports = {

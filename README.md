@@ -11,7 +11,7 @@ This will start an Electron window, with the main page loaded.
 
 ### TO DO
 
-* Run Video-Maker in different process.
+* Add Credentials asking on first run
 * Add Sources Tab
 * Add Open Source Licenses Tab
 * Add multi-language support (file with static texts for translations)
