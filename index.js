@@ -60,6 +60,7 @@ function killVideoMaker() {
     try {
         vidmk.close();
         vidmk = null;
+        win.webContents.send('video-maker-status', {status: 'killed'});
     } catch (e) {
         console.log(e);
     }
@@ -111,11 +112,10 @@ function createReportWindow() {
 
     vidmk.removeMenu();
 
-    vidmk.webContents.openDevTools();
-
     vidmk.loadFile('app/pages/video-maker.html').catch(console.log);
 
     vidmk.on('closed', () => {
+        win.webContents.send('video-maker-status', {status: 'killed'});
         vidmk = null;
     });
 }

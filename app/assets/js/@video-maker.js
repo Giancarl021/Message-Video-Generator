@@ -2,7 +2,6 @@ const { remote, ipcRenderer } = require('electron');
 const videoMaker = require('./../../video_maker/index');
 
 function killProcess() {
-    ipcRenderer.send('vidmk-status', { status: 'killed' });
     remote.getCurrentWindow().close();
 }
 
