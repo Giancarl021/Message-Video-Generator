@@ -30,7 +30,7 @@ function selectOutputDir() {
     saveJSON(__configPath, config);
 }
 
-function toggleRender(args = {hasStopped: false}) {
+function toggleRender(args = {hasStopped: false, hasFinished: false}) {
     const toolbar = document.getElementById('toolbar');
 
     if (!isRendering) {
@@ -50,8 +50,8 @@ function toggleRender(args = {hasStopped: false}) {
         toolbar.style.pointerEvents = 'all';
         toolbar.style.opacity = '1';
         document.getElementById('start-rendering').innerText = 'Iniciar';
-        document.getElementById('process-name').innerText = 'Processo Interrompido';
-        document.getElementById('subprocess-name').innerText = 'Aguradando inicialização';
+        document.getElementById('process-name').innerText = args.hasFinished ? 'Processo concluído' : 'Processo Interrompido';
+        document.getElementById('subprocess-name').innerText = args.hasFinished ? 'Seu vídeo está pronto!' : 'Aguardando inicialização';
         removeClass('.process', 'process-running');
         removeClass('.process', 'process-done');
         stopRendering(args.hasStopped);

@@ -1,4 +1,4 @@
-const { shell, ipcRenderer } = require('electron');
+const {shell, ipcRenderer} = require('electron');
 const fs = require('fs');
 const transitionLoadTime = 200;
 let localRequire = null;
@@ -73,13 +73,13 @@ ipcRenderer.on('video-maker', (event, args) => {
 
 function startRendering() {
     ipcRenderer.on('video-maker-status', __vidmkStatusListener);
-    ipcRenderer.send('video-maker', { action: 'start' });
+    ipcRenderer.send('video-maker', {action: 'start'});
     isRendering = true;
 }
 
 function showOutput() {
     if (isRendering) {
-        ipcRenderer.send('video-maker', { action: 'show' });
+        ipcRenderer.send('video-maker', {action: 'show'});
     } else {
         showMsgBox('Não está renderizando');
     }
@@ -87,7 +87,7 @@ function showOutput() {
 
 function stopRendering(hasStopped) {
     if (!hasStopped) {
-        ipcRenderer.send('video-maker', { action: 'kill' });
+        ipcRenderer.send('video-maker', {action: 'kill'});
     }
     isRendering = false;
     ipcRenderer.removeAllListeners('video-maker-status');
@@ -96,9 +96,11 @@ function stopRendering(hasStopped) {
 function __vidmkStatusListener(event, args) {
     if (!args.status) return;
     if (args.status === 'killed') {
-        local('toggleRender', { hasStopped: true });
+        local('toggleRender', {hasStopped: true});
+    } else if (args.status === 'finished') {
+        local('toggleRender', {hasStopped: true, hasFinished: true})
     } else if (args.status === 'info') {
-        local('updateRenderProcess', { code: args.message });
+        local('updateRenderProcess', {code: args.message});
     } else if (args.status === 'error') {
         showMsgBox(args.message);
     }
