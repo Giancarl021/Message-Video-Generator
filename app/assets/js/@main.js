@@ -3,7 +3,7 @@ const fs = require('fs');
 const transitionLoadTime = 200;
 let localRequire = null;
 
-let __configPath = 'video_maker/data/config.json';
+const __configPath = 'video_maker/data/config.json';
 let config;
 
 let isRendering = false;
@@ -159,7 +159,7 @@ function loadTab(target, element) {
 
     content.innerHTML = loadFile(`app/tabs/${target}.html`);
 
-    if (fs.existsSync(`app/assets/js/${target}.js`)) {
+    if (fileExists(`app/assets/js/${target}.js`)) {
         localRequire = require(`./../assets/js/${target}`);
         localRequire.load();
     }
