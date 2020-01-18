@@ -18,7 +18,9 @@ async function main(element) {
     data.image = await bots.image(data.phrases);
     data.music = await bots.music();
     await bots.video(data);
-    bots.devTools.saveJSON(bots.path.buildPath('video_maker/temp/data.json'), data);
+    const dataPath = bots.path.buildPath('video_maker/temp/data.json');
+    bots.print.print(`>> Saving data of this run on ${dataPath}`);
+    bots.devTools.saveJSON(dataPath, data);
     console.log('>> Process successfully ended');
     bots.print.sendInfo('bot-end::main');
 }
