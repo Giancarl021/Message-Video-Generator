@@ -15,10 +15,6 @@ async function main(element) {
     bots.cleaner();
     data.phrases = await bots.phrase();
     data.image = await bots.image(data.phrases);
-
-    // /* # */ bots.devTools.saveJSON('C:\Users\Pichau\Documents\Git\Message-Video-Generator\video_maker\temp\data.json', data);
-    // /* # */ const data = bots.devTools.loadJSON('C:\\Users\\Pichau\\Documents\\Git\\Message-Video-Generator\\video_maker\\temp\\data.json');
-    
     data.music = await bots.music();
     await bots.video(data);
     bots.devTools.saveJSON('video_maker/temp/data.json', data);

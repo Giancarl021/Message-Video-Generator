@@ -131,6 +131,7 @@ function __vidmkStatusListener(event, args) {
     } else if (args.status === 'info') {
         local('updateRenderProcess', {code: args.message});
     } else if (args.status === 'error') {
+        if(isRendering) local('toggleRender', {hasStopped: true});
         showMsgBox(args.message);
     }
 }
@@ -160,7 +161,12 @@ function loadTransitions(...transitions) {
 }
 
 function showMsgBox(message) {
-    alert(message);
+    remote.dialog.showMessageBoxSync({
+        type: 'info',
+        title: 'Message Video Generator',
+        buttons: ['Ok'],
+        message: message
+    });
 }
 
 // Main page
