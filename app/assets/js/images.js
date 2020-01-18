@@ -109,14 +109,14 @@ function loadImageControllers() {
         ed: document.getElementById('ed-img')
     };
     if (openingImage && fileExists(openingImage)) {
-        img.op.src = `${openingImage}?${Date.now()}`;
+        img.op.src = unpackedPrefix + `${openingImage}?${Date.now()}`;
         modifyImageControls(img.op.parentElement, true);
     } else {
         fallbackImage(img.op);
     }
 
     if (endingImage && fileExists(endingImage)) {
-        img.ed.src = `${endingImage}?${Date.now()}`;
+        img.ed.src = unpackedPrefix + `${endingImage}?${Date.now()}`;
         modifyImageControls(img.ed.parentElement, true);
     } else {
         fallbackImage(img.ed);
@@ -166,11 +166,10 @@ function addImage(args) {
         async function fitImage(filePath) {
             const { resolution } = config.video;
             const gm = require('gm').subClass({ imageMagick: true });
-            const path = require('path');
-            const output = path.resolve(`video_maker/data/images/${args.target}.png`);
+            const output = `video_maker/data/images/${args.target}.png`;
             return new Promise((resolve, reject) => {
                 const { exec } = require('child_process');
-                exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${output}"`, (err, stdout, stderr) => {
+                exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${unpackedPrefix + output}"`, (err, stdout, stderr) => {
                     if (err) return reject(err);
                     return resolve(output);
                 });

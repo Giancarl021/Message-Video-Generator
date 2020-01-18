@@ -4,6 +4,7 @@ const transitionLoadTime = 200;
 let localRequire = null;
 
 const prefix = createPrefix();
+const unpackedPrefix = createPrefix(true);
 const __configPath = 'video_maker/data/config.json';
 let config;
 
@@ -11,10 +12,13 @@ let isRendering = false;
 
 // File
 
-function createPrefix() {
+function createPrefix(isUnpacked = false) {
     let string = remote.app.getAppPath().replace(/\\/g, '/');
     if(string.charAt(string.length - 1) !== '/') {
         string += '/';
+    }
+    if(isUnpacked) {
+        string = string.replace('.asar', '.asar.unpacked');
     }
     return string;
 }
