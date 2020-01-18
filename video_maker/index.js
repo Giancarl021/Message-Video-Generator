@@ -1,4 +1,5 @@
 const bots = {
+    path: require('./bots/path'),
     print: require('./bots/print'),
     phrase: require('./bots/phrase'),
     image: require('./bots/image'),
@@ -17,7 +18,7 @@ async function main(element) {
     data.image = await bots.image(data.phrases);
     data.music = await bots.music();
     await bots.video(data);
-    bots.devTools.saveJSON('video_maker/temp/data.json', data);
+    bots.devTools.saveJSON(bots.path.buildPath('video_maker/temp/data.json'), data);
     console.log('>> Process successfully ended');
     bots.print.sendInfo('bot-end::main');
 }

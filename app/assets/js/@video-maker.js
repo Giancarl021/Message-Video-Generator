@@ -12,7 +12,7 @@ function init() {
             killProcess();
         })
         .catch((err) => {
-            ipcRenderer.send('vidmk-status', {status: 'error', error: err});
+            ipcRenderer.send('vidmk-status', {status: 'error', message: err.message});
             killProcess();
         });
     const output = document.getElementById('output');
