@@ -14,49 +14,62 @@ let isRendering = false;
 
 function createPrefix(isUnpacked = false) {
     let string = remote.app.getAppPath().replace(/\\/g, '/');
-    if(string.charAt(string.length - 1) !== '/') {
+    if (string.charAt(string.length - 1) !== '/') {
         string += '/';
     }
-    if(isUnpacked) {
+    if (isUnpacked) {
         string = string.replace('.asar', '.asar.unpacked');
     }
     return string;
 }
 
-function fileExists(path) {
-    console.log('fileExists: ' + prefix + path);
-    return fs.existsSync(prefix + path);
+function fileExists(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('fileExists: ' + address);
+    return fs.existsSync(address);
 }
 
-function loadFile(path) {
-    console.log('loadFile: ' + prefix + path);
+function loadFile(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('loadFile: ' + address);
     return fs.readFileSync(prefix + path, 'utf8');
 }
 
-function deleteFile(path) {
-    console.log('deleteFile: ' + prefix + path);
-    fs.unlinkSync(prefix + path);
+function deleteFile(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('deleteFile: ' + address);
+    fs.unlinkSync(address);
 }
 
-function saveFile(path, string) {
-    console.log('saveFile: ' + prefix + path);
+function saveFile(path, string, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('saveFile: ' + address);
     fs.writeFileSync(prefix + path, string);
 }
 
-function loadDir(path) {
-    console.log('loadDir: ' + prefix + path);
-    return fs.readdirSync(prefix + path);
+function loadDir(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('loadDir: ' + address);
+    return fs.readdirSync(address);
 }
 
 // JSON
 
 function saveJSON(path, data) {
-   saveFile(path, JSON.stringify(data, null, 4));
+    let isUnpacked = false;
+    if (path === __configPath) {
+        isUnpacked = true;
+    }
+    saveFile(path, JSON.stringify(data, null, 4), isUnpacked);
     config = loadJSON(path);
 }
 
 function loadJSON(path) {
-    return JSON.parse(loadFile(path));
+    let isUnpacked = false;
+    if (path === __configPath) {
+        isUnpacked = true;
+    }
+    return JSON.parse(loadFile(path, isUnpacked));
 }
 
 // External calls

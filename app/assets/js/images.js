@@ -108,14 +108,14 @@ function loadImageControllers() {
         op: document.getElementById('op-img'),
         ed: document.getElementById('ed-img')
     };
-    if (openingImage && fileExists(openingImage)) {
+    if (openingImage && fileExists(openingImage, true)) {
         img.op.src = unpackedPrefix + `${openingImage}?${Date.now()}`;
         modifyImageControls(img.op.parentElement, true);
     } else {
         fallbackImage(img.op);
     }
 
-    if (endingImage && fileExists(endingImage)) {
+    if (endingImage && fileExists(endingImage, true)) {
         img.ed.src = unpackedPrefix + `${endingImage}?${Date.now()}`;
         modifyImageControls(img.ed.parentElement, true);
     } else {
@@ -182,13 +182,26 @@ function addImage(args) {
 function removeImage(args) {
     if (!args.target) return;
     const data = config;
+    const img = {
+        op: document.getElementById('op-img'),
+        ed: document.getElementById('ed-img')
+    };
+
+    const target = {
+        op: document.getElementById('add-op-img'),
+        ed: document.getElementById('add-ed-img')
+    };
 
     if (args.target === 'op') {
-        deleteFile(data.video.openingImage);
+        deleteFile(data.video.openingImage, true);
         data.video.openingImage = '';
+        target.op.value = '';
+        img.op.src = '';
     } else if (args.target === 'ed') {
-        deleteFile(data.video.endingImage);
+        deleteFile(data.video.endingImage, true);
         data.video.endingImage = '';
+        target.ed.value = '';
+        img.ed.src = '';
     }
     saveJSON(__configPath, data);
     loadImageControllers();
