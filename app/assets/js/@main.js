@@ -1,8 +1,9 @@
-const {shell, ipcRenderer} = require('electron');
+const {shell, ipcRenderer, remote} = require('electron');
 const fs = require('fs');
 const transitionLoadTime = 200;
 let localRequire = null;
 
+const prefix = createPrefix();
 const __configPath = 'video_maker/data/config.json';
 let config;
 
@@ -10,37 +11,48 @@ let isRendering = false;
 
 // File
 
+function createPrefix() {
+    let string = remote.app.getAppPath().replace(/\\/g, '/');
+    if(string.charAt(string.length - 1) !== '/') {
+        string += '/';
+    }
+    return string;
+}
+
 function fileExists(path) {
-    console.log('fileExists: ' + path);
-    return fs.existsSync(path);
+    console.log('fileExists: ' + prefix + path);
+    return fs.existsSync(prefix + path);
 }
 
 function loadFile(path) {
-    console.log('loadFile: ' + path);
-    return fs.readFileSync(path, 'utf8');
+    console.log('loadFile: ' + prefix + path);
+    return fs.readFileSync(prefix + path, 'utf8');
 }
 
 function deleteFile(path) {
-    console.log('deleteFile: ' + path);
-    fs.unlinkSync(path);
+    console.log('deleteFile: ' + prefix + path);
+    fs.unlinkSync(prefix + path);
 }
 
 function saveFile(path, string) {
-    console.log('saveFile: ' + path);
-    fs.writeFileSync(path, string);
+    console.log('saveFile: ' + prefix + path);
+    fs.writeFileSync(prefix + path, string);
+}
+
+function loadDir(path) {
+    console.log('loadDir: ' + prefix + path);
+    return fs.readdirSync(prefix + path);
 }
 
 // JSON
 
 function saveJSON(path, data) {
-    console.log('saveJSON: ' + path);
-    fs.writeFileSync(path, JSON.stringify(data, null, 4));
+   saveFile(path, JSON.stringify(data, null, 4));
     config = loadJSON(path);
 }
 
 function loadJSON(path) {
-    console.log('loadJSON: ' + path);
-    return JSON.parse(fs.readFileSync(path, 'utf8'));
+    return JSON.parse(loadFile(path));
 }
 
 // External calls
@@ -138,7 +150,7 @@ function showMsgBox(message) {
 
 function loadCSSFiles() {
     const path = 'app/assets/css';
-    fs.readdirSync(path).forEach(css => {
+    loadDir(path).forEach(css => {
         if (!css.includes('@')) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
     });
 }

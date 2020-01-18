@@ -1,6 +1,5 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 let win, vidmk;
-
 // Stating the application
 
 app.on('ready', createMainWindow);
