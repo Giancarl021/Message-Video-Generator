@@ -2,8 +2,8 @@ const printer = require('./print');
 const {buildPath, buildUnpacked} = require('./path');
 const videoshow = require('videoshow');
 const ffmpeg = require('fluent-ffmpeg');
-const ffmpegPath = buildUnpacked(require('@ffmpeg-installer/ffmpeg').path);
-const ffprobePath = buildUnpacked(require('@ffprobe-installer/ffprobe').path);
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path; // ERROR HERE
+const ffprobePath = require('@ffprobe-installer/ffprobe').path; // ERROR HERE
 const videoOptions = require('./../data/config').video;
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
