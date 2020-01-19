@@ -161,6 +161,7 @@ function loadTransitions(...transitions) {
 }
 
 function showMsgBox(message) {
+    console.log(message);
     remote.dialog.showMessageBoxSync({
         type: 'info',
         title: 'Message Video Generator',

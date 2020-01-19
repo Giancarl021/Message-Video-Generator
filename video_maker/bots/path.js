@@ -1,15 +1,10 @@
 const {remote} = require('electron');
 
-function getPacked() {
-    return getPath();
-}
+const __packedPath = getPath();
+const __unpackedPath = getPath(true);
 
-function getUnpacked() {
-    return getPath(true);
-}
-
-function buildPath(path, isUnpacked) {
-    return (isUnpacked ? getUnpacked() : getPacked()) + path;
+function buildPath(path, isUnpacked = true) {
+    return (isUnpacked ? __unpackedPath : __packedPath) + path;
 }
 
 function getPath(isUnpacked = false) {
@@ -24,7 +19,5 @@ function getPath(isUnpacked = false) {
 }
 
 module.exports = {
-    getPacked,
-    getUnpacked,
     buildPath
 };

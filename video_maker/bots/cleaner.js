@@ -1,13 +1,15 @@
 const printer = require('./print');
+const {buildPath} = require('./path');
 const fs = require('fs');
 
 function main() {
     printer.print('>> Initializing cleaner bot');
     printer.sendInfo('bot-start::cleaner');
     printer.sendInfo('bot-process::cleaner::cleaning-temp');
-    const tmp = fs.readdirSync('video_maker/temp');
+    const path = buildPath('video_maker/temp');
+    const tmp = fs.readdirSync(path);
     tmp.forEach(e => {
-        clearDirectory(`video_maker/temp/${e}`)
+        clearDirectory(`${path}/${e}`)
     });
     printer.print('>>> Temp files cleaned');
     printer.sendInfo('bot-end::cleaner');
@@ -19,7 +21,7 @@ function clearDirectory(path) {
         sub.forEach(e => {
             clearDirectory(`${path}/${e}`)
         });
-    } else {
+    } else if(!path.includes('.lock')) {
         fs.unlinkSync(path);
     }
 }
