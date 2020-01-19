@@ -1,4 +1,4 @@
-const {remote, ipcRenderer} = require('electron');
+const { remote, ipcRenderer } = require('electron');
 const videoMaker = require('./../../video_maker/index');
 
 function killProcess() {
@@ -8,11 +8,11 @@ function killProcess() {
 function init() {
     videoMaker(document.getElementById('output'))
         .then(() => {
-            ipcRenderer.send('vidmk-status', {status: 'finished'});
+            ipcRenderer.send('vidmk-status', { status: 'finished' });
             killProcess();
         })
         .catch((err) => {
-            ipcRenderer.send('vidmk-status', {status: 'error', message: err.message});
+            ipcRenderer.send('vidmk-status', { status: 'error', message: err.message });
             killProcess();
         });
     const output = document.getElementById('output');

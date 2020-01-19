@@ -17,7 +17,7 @@ function load() {
 }
 
 function selectOutputDir() {
-    const {dialog} = require('electron').remote;
+    const { dialog } = require('electron').remote;
     const response = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
@@ -30,7 +30,7 @@ function selectOutputDir() {
     saveJSON(__configPath, config);
 }
 
-function toggleRender(args = {hasStopped: false, hasFinished: false}) {
+function toggleRender(args = { hasStopped: false, hasFinished: false }) {
     const toolbar = document.getElementById('toolbar');
 
     if (!isRendering) {

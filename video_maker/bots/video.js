@@ -1,19 +1,19 @@
 const printer = require('./print');
-const {buildPath, buildUnpacked} = require('./path');
+const { buildPath, buildUnpacked } = require('./path');
 const videoshow = require('videoshow');
 const ffmpeg = require('fluent-ffmpeg');
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path; // ERROR HERE
-const ffprobePath = require('@ffprobe-installer/ffprobe').path; // ERROR HERE
+const ffmpegPath = buildUnpacked(require('@ffmpeg-installer/ffmpeg').path); // ERROR HERE
+const ffprobePath = buildUnpacked(require('@ffprobe-installer/ffprobe').path); // ERROR HERE
 const videoOptions = require('./../data/config').video;
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
 
 const fs = require('fs');
 const imageSize = require('image-size');
-const {getAudioDurationInSeconds} = require('get-audio-duration');
+const { getAudioDurationInSeconds } = require('get-audio-duration');
 
 async function main(data) {
-    printer.print('>> Video bot initialing');
+    printer.print('>> Video bot initializing');
     const images = insertImages(data);
     const slideDuration = await getSlideDuration(data, images.length);
     const options = {
