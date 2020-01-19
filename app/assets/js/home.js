@@ -121,6 +121,9 @@ function parseBotMessage(text) {
         case 'cleaning-temp':
             message = 'Limpando arquivos temporários';
             break;
+        case 'verifying-folders':
+            message = 'Verificando estrutura de pastas';
+            break;
         case 'downloading-phrases':
             message = 'Baixando frases';
             break;

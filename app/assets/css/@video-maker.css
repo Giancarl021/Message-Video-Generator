@@ -22,6 +22,10 @@ body {
     overflow: hidden;
 }
 
+.title {
+    margin: 0 10px;
+}
+
 #output {
     position: absolute;
     top: var(--toolbar-height);

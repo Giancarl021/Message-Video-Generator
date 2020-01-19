@@ -1,4 +1,5 @@
 const printer = require('./print');
+const {buildPath} = require('./path');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
@@ -17,18 +18,18 @@ async function fetchMusic() {
     console.log('>>> Searching music');
     printer.sendInfo('bot-start::music');
     printer.sendInfo('bot-process::music::finding-music');
-    const { pages, elements } = musicSrc;
+    const {pages, elements} = musicSrc;
     const $ = await getHtml(musicSrc.url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.suffix);
     const musics = $(elements.parentElement);
     const index = Math.floor(Math.random() * musics.length);
     const music = $(musics[index]);
     const url = $(music).find(elements.musicElement).attr(elements.musicUrlAttribute);
-    const destination = 'video_maker/temp/music/song.mp3';
+    const destination = buildPath('video_maker/temp/music/song.mp3');
     console.log('>>> Downloading music');
     printer.sendInfo('bot-process::music::downloading-music');
     await fetchData(url, destination);
     printer.sendInfo('bot-end::music');
-    return { url: url, path: destination };
+    return {url: url, path: destination};
 
 }
 

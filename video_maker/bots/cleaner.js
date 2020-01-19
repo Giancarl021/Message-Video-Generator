@@ -12,7 +12,23 @@ function main() {
         clearDirectory(`${path}/${e}`)
     });
     printer.print('>>> Temp files cleaned');
+    printer.sendInfo('bot-process::cleaner::verifying-folders');
+    createTempDirectories(path);
     printer.sendInfo('bot-end::cleaner');
+}
+
+function createTempDirectories(path) {
+    const dir = [
+        'background',
+        'foreground',
+        'music',
+        'slide'
+    ];
+    dir.forEach(e => {
+        if(!fs.existsSync(`${path}/${e}`)) {
+            fs.mkdirSync(e);
+        }
+    });
 }
 
 function clearDirectory(path) {
