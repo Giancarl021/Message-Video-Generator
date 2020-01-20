@@ -5,19 +5,21 @@ const fs = require('fs');
 function main() {
     printer.print('>> Initializing cleaner bot');
     printer.sendInfo('bot-start::cleaner');
-    printer.sendInfo('bot-process::cleaner::cleaning-temp');
     const path = buildPath('video_maker/temp');
+    printer.print('>> Verifying temp folders');
+    printer.sendInfo('bot-process::cleaner::verifying-folders');
+    createTempDirectories(path);
+    printer.sendInfo('bot-process::cleaner::cleaning-temp');
     const tmp = fs.readdirSync(path);
     tmp.forEach(e => {
         clearDirectory(`${path}/${e}`)
     });
     printer.print('>>> Temp files cleaned');
-    printer.sendInfo('bot-process::cleaner::verifying-folders');
-    createTempDirectories(path);
     printer.sendInfo('bot-end::cleaner');
 }
 
 function createTempDirectories(path) {
+    if(!fs.existsSync(path)) fs.mkdirSync(path);
     const dir = [
         'background',
         'foreground',
@@ -26,7 +28,7 @@ function createTempDirectories(path) {
     ];
     dir.forEach(e => {
         if(!fs.existsSync(`${path}/${e}`)) {
-            fs.mkdirSync(e);
+            fs.mkdirSync(`${path}/${e}`);
         }
     });
 }

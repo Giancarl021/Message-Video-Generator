@@ -10,11 +10,7 @@
         "dist": "electron-builder"
     },
     "build": {
-        "asar": true,
-        "asarUnpack": [
-            "video_maker/data/**/*",
-            "video_maker/temp/**/*"
-        ],
+        "asar": false,
         "appId": "com.giancarl021.mvg",
         "productName": "Message Video Generator",
         "files": [
