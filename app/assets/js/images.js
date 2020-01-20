@@ -195,12 +195,12 @@ function removeImage(args) {
     };
 
     if (args.target === 'op') {
-        deleteFile(data.video.openingImage, true);
+        fs.unlinkSync(data.video.openingImage, true);
         data.video.openingImage = '';
         target.op.value = '';
         img.op.src = '';
     } else if (args.target === 'ed') {
-        deleteFile(data.video.endingImage, true);
+        fs.unlinkSync(data.video.endingImage, true);
         data.video.endingImage = '';
         target.ed.value = '';
         img.ed.src = '';

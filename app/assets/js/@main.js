@@ -12,6 +12,12 @@ let isRendering = false;
 
 // File
 
+function createDataDirectories() {
+    const path = unpackedPrefix + 'video_maker/data';
+    if(!fs.existsSync(path)) fs.mkdirSync(path);
+    if(!fs.existsSync(`${path}/images`)) fs.mkdirSync(`${path}/images`);
+}
+
 function createPrefix(isUnpacked = false) {
     let string = remote.app.getAppPath().replace(/\\/g, '/');
     if (string.charAt(string.length - 1) !== '/') {
@@ -209,6 +215,7 @@ function init() {
     if (initialTab) {
         loadTab(initialTab, document.querySelector(`[alt="${initialTab}"]`));
     }
+    createDataDirectories();
 }
 
 document.addEventListener('DOMContentLoaded', init);
