@@ -7,10 +7,6 @@ function buildPath(path, isUnpacked = true) {
     return (isUnpacked ? __unpackedPath : __packedPath) + path;
 }
 
-function buildUnpacked(path) {
-    return path.replace('.asar', '.asar.unpacked');
-}
-
 function getPath(isUnpacked = false) {
     let string = remote.app.getAppPath().replace(/\\/g, '/');
     if (string.charAt(string.length - 1) !== '/') {
@@ -23,6 +19,5 @@ function getPath(isUnpacked = false) {
 }
 
 module.exports = {
-    buildPath,
-    buildUnpacked
+    buildPath
 };
