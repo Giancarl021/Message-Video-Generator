@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function load() {
     loadMessageTile();
     loadImageControllers();
@@ -108,15 +110,15 @@ function loadImageControllers() {
         op: document.getElementById('op-img'),
         ed: document.getElementById('ed-img')
     };
-    if (openingImage && fileExists(openingImage, true)) {
-        img.op.src = unpackedPrefix + `${openingImage}?${Date.now()}`;
+    if (openingImage && fs.existsSync(openingImage, true)) {
+        img.op.src = `${openingImage}?${Date.now()}`;
         modifyImageControls(img.op.parentElement, true);
     } else {
         fallbackImage(img.op);
     }
 
-    if (endingImage && fileExists(endingImage, true)) {
-        img.ed.src = unpackedPrefix + `${endingImage}?${Date.now()}`;
+    if (endingImage && fs.existsSync(endingImage, true)) {
+        img.ed.src = `${endingImage}?${Date.now()}`;
         modifyImageControls(img.ed.parentElement, true);
     } else {
         fallbackImage(img.ed);
@@ -155,9 +157,9 @@ function addImage(args) {
         startLoadingController(target.parentElement.parentElement);
         const path = await fitImage(file.path);
         if (args.target === 'add-op-img') {
-            config.video.openingImage = path;
+            config.video.openingImage = unpackedPrefix + path;
         } else if (args.target === 'add-ed-img') {
-            config.video.endingImage = path;
+            config.video.endingImage = unpackedPrefix + path;
         }
         saveJSON(__configPath, config);
         stopLoadingController(target.parentElement.parentElement);
