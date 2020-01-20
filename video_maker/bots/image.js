@@ -1,4 +1,5 @@
 const printer = require('./print');
+const {buildPath} = require('./path');
 const imgDownloader = require('image-downloader');
 const data = require('../data/config');
 const {text, backgroundColor, wordWrapCharCount} = data.image;
@@ -20,11 +21,11 @@ async function generateImages(phrases) {
     let i = 0;
     const paths = [];
     for (const phrase of phrases) {
-        const path = `video_maker/temp/foreground/${i}.png`;
+        const path = buildPath(`video_maker/temp/foreground/${i}.png`);
         await textToImage(`${wrapText(phrase.message)}\n\n--- ${wrapText(phrase.author)} ---`, text, path);
         paths.push({
             text: path,
-            background: `video_maker/temp/background/${i}.jpg`
+            background: buildPath(`video_maker/temp/background/${i}.jpg`)
         });
         i++;
     }
@@ -33,7 +34,7 @@ async function generateImages(phrases) {
 
     async function textToImage(text, font, output) {
         return new Promise((resolve, reject) => {
-            exec(`magick -background ${backgroundColor} -fill ${font.color} -font ${font.font} -pointsize ${font.size} -gravity center label:"${text.replace(/\n/g, '\\n').replace(/"/g, '\\"')}" -gravity southeast -splice 20x20 -gravity northwest -splice 20x20 -bordercolor ${font.color} -border 3x3 ${output}`, (err, stdout, stderr) => {
+            exec(`magick -background ${backgroundColor} -fill ${font.color} -font ${font.font} -pointsize ${font.size} -gravity center label:"${text.replace(/\n/g, '\\n').replace(/"/g, '\\"')}" -gravity southeast -splice 20x20 -gravity northwest -splice 20x20 -bordercolor ${font.color} -border 3x3 "${output}"`, (err, stdout, stderr) => {
                 if (err) return reject(err);
                 return resolve();
             });
@@ -73,7 +74,7 @@ async function mergeImages(paths) {
     let i = 0;
     const outputs = [];
     for (const path of paths) {
-        const output = `video_maker/temp/slide/${i++}.png`;
+        const output = buildPath(`video_maker/temp/slide/${i++}.png`);
         await mergeImage(path.background, path.text, output);
         outputs.push(output);
     }
@@ -84,7 +85,7 @@ async function mergeImages(paths) {
     async function mergeImage(background, foreground, output) {
 
         return new Promise((resolve, reject) => {
-            exec(`magick ${background} ${foreground} -gravity Center -composite ${output}`, (err, stdout, stderr) => {
+            exec(`magick ${background} ${foreground} -gravity Center -composite "${output}"`, (err, stdout, stderr) => {
                 if (err) reject(err);
                 resolve();
             });
@@ -95,7 +96,7 @@ async function mergeImages(paths) {
 async function downloadRandomBackgrounds(n) {
     printer.print('>>> Downloading backgrounds');
     printer.sendInfo('bot-process::image::downloading-bg');
-    const destinationPath = 'video_maker/temp/background';
+    const destinationPath = buildPath('video_maker/temp/background');
 
     for (let i = 0; i < n; i++) {
         await downloadImage(`https://picsum.photos/${resolution.width}/${resolution.height}?random=${i}.jpg`, `${destinationPath}/${i}.jpg`);

@@ -1,4 +1,5 @@
 const bots = {
+    path: require('./bots/path'),
     print: require('./bots/print'),
     phrase: require('./bots/phrase'),
     image: require('./bots/image'),
@@ -15,13 +16,11 @@ async function main(element) {
     bots.cleaner();
     data.phrases = await bots.phrase();
     data.image = await bots.image(data.phrases);
-
-    // /* # */ bots.devTools.saveJSON('C:\Users\Pichau\Documents\Git\Message-Video-Generator\video_maker\temp\data.json', data);
-    // /* # */ const data = bots.devTools.loadJSON('C:\\Users\\Pichau\\Documents\\Git\\Message-Video-Generator\\video_maker\\temp\\data.json');
-    
     data.music = await bots.music();
     await bots.video(data);
-    bots.devTools.saveJSON('video_maker/temp/data.json', data);
+    const dataPath = bots.path.buildPath('video_maker/temp/data.json');
+    bots.print.print(`>> Saving data of this run on ${dataPath}`);
+    bots.devTools.saveJSON(dataPath, data);
     console.log('>> Process successfully ended');
     bots.print.sendInfo('bot-end::main');
 }

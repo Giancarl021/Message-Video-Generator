@@ -1,4 +1,5 @@
 const printer = require('./print');
+const {buildPath} = require('./path');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
@@ -7,28 +8,28 @@ const musicSrc = require('./../data/config').src.music;
 
 
 async function main() {
-    console.log('>> Music bot initializing');
+    printer.print('>> Music bot initializing');
     const musicData = await fetchMusic();
     musicData.bpm = await getMusicData(musicData.url);
     return musicData;
 }
 
 async function fetchMusic() {
-    console.log('>>> Searching music');
+    printer.print('>>> Searching music');
     printer.sendInfo('bot-start::music');
     printer.sendInfo('bot-process::music::finding-music');
-    const { pages, elements } = musicSrc;
+    const {pages, elements} = musicSrc;
     const $ = await getHtml(musicSrc.url + pages.prefix + getRandomIndex(pages.min, pages.max) + pages.suffix);
     const musics = $(elements.parentElement);
     const index = Math.floor(Math.random() * musics.length);
     const music = $(musics[index]);
     const url = $(music).find(elements.musicElement).attr(elements.musicUrlAttribute);
-    const destination = 'video_maker/temp/music/song.mp3';
-    console.log('>>> Downloading music');
+    const destination = buildPath('video_maker/temp/music/song.mp3');
+    printer.print('>>> Downloading music');
     printer.sendInfo('bot-process::music::downloading-music');
     await fetchData(url, destination);
     printer.sendInfo('bot-end::music');
-    return { url: url, path: destination };
+    return {url: url, path: destination};
 
 }
 
@@ -66,7 +67,7 @@ function getRandomIndex(min, max) {
 }
 
 async function getMusicData(url) {
-    console.log('>>> Getting audio data');
+    printer.print('>>> Getting audio data');
     const response = await axios({
         "method": "POST",
         "url": "https://macgyverapi-song-tempo-detection-v1.p.rapidapi.com/",

@@ -108,15 +108,15 @@ function loadImageControllers() {
         op: document.getElementById('op-img'),
         ed: document.getElementById('ed-img')
     };
-    if (openingImage && fileExists(openingImage)) {
-        img.op.src = `${openingImage}?${Date.now()}`;
+    if (openingImage && fileExists(openingImage, true)) {
+        img.op.src = unpackedPrefix + `${openingImage}?${Date.now()}`;
         modifyImageControls(img.op.parentElement, true);
     } else {
         fallbackImage(img.op);
     }
 
-    if (endingImage && fileExists(endingImage)) {
-        img.ed.src = `${endingImage}?${Date.now()}`;
+    if (endingImage && fileExists(endingImage, true)) {
+        img.ed.src = unpackedPrefix + `${endingImage}?${Date.now()}`;
         modifyImageControls(img.ed.parentElement, true);
     } else {
         fallbackImage(img.ed);
@@ -166,11 +166,10 @@ function addImage(args) {
         async function fitImage(filePath) {
             const { resolution } = config.video;
             const gm = require('gm').subClass({ imageMagick: true });
-            const path = require('path');
-            const output = path.resolve(`video_maker/data/images/${args.target}.png`);
+            const output = `video_maker/data/images/${args.target}.png`;
             return new Promise((resolve, reject) => {
                 const { exec } = require('child_process');
-                exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${output}"`, (err, stdout, stderr) => {
+                exec(`magick "${filePath}" -resize ${resolution.width}x${resolution.height} -background black -gravity center -extent ${resolution.width}x${resolution.height} "${unpackedPrefix + output}"`, (err, stdout, stderr) => {
                     if (err) return reject(err);
                     return resolve(output);
                 });
@@ -183,13 +182,26 @@ function addImage(args) {
 function removeImage(args) {
     if (!args.target) return;
     const data = config;
+    const img = {
+        op: document.getElementById('op-img'),
+        ed: document.getElementById('ed-img')
+    };
+
+    const target = {
+        op: document.getElementById('add-op-img'),
+        ed: document.getElementById('add-ed-img')
+    };
 
     if (args.target === 'op') {
-        deleteFile(data.video.openingImage);
+        deleteFile(data.video.openingImage, true);
         data.video.openingImage = '';
+        target.op.value = '';
+        img.op.src = '';
     } else if (args.target === 'ed') {
-        deleteFile(data.video.endingImage);
+        deleteFile(data.video.endingImage, true);
         data.video.endingImage = '';
+        target.ed.value = '';
+        img.ed.src = '';
     }
     saveJSON(__configPath, data);
     loadImageControllers();

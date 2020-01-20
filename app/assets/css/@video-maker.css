@@ -40,6 +40,7 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    z-index: 9999;
 }
 
 #drag-window {
@@ -47,14 +48,13 @@ body {
     width: calc(100% - var(--toolbar-height) - 1px);
     -webkit-app-region: drag;
     display: flex;
-    align-items: flex-start;
-    justify-items: center;
-    flex-direction: column;
-    
+    align-items: center;
+    justify-items: start;
+    flex-direction: row;
 }
 
 #drag-window h1 {
-    padding: 0;
+    padding: 0 10px;
     display: flex;
     justify-items: center;
     align-items: center;

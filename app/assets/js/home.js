@@ -17,7 +17,7 @@ function load() {
 }
 
 function selectOutputDir() {
-    const {dialog} = require('electron').remote;
+    const { dialog } = require('electron').remote;
     const response = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
@@ -30,7 +30,7 @@ function selectOutputDir() {
     saveJSON(__configPath, config);
 }
 
-function toggleRender(args = {hasStopped: false, hasFinished: false}) {
+function toggleRender(args = { hasStopped: false, hasFinished: false }) {
     const toolbar = document.getElementById('toolbar');
 
     if (!isRendering) {
@@ -120,6 +120,9 @@ function parseBotMessage(text) {
     switch (text) {
         case 'cleaning-temp':
             message = 'Limpando arquivos temporários';
+            break;
+        case 'verifying-folders':
+            message = 'Verificando estrutura de pastas';
             break;
         case 'downloading-phrases':
             message = 'Baixando frases';

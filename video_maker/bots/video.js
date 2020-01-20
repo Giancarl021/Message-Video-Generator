@@ -1,4 +1,5 @@
 const printer = require('./print');
+const { buildPath } = require('./path');
 const videoshow = require('videoshow');
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
@@ -9,10 +10,10 @@ ffmpeg.setFfprobePath(ffprobePath);
 
 const fs = require('fs');
 const imageSize = require('image-size');
-const {getAudioDurationInSeconds} = require('get-audio-duration');
+const { getAudioDurationInSeconds } = require('get-audio-duration');
 
 async function main(data) {
-    printer.print('>> Video bot initialing');
+    printer.print('>> Video bot initializing');
     const images = insertImages(data);
     const slideDuration = await getSlideDuration(data, images.length);
     const options = {
@@ -82,7 +83,7 @@ async function getSlideDuration(data, n) {
     if (videoOptions.slideDuration && typeof videoOptions.slideDuration === 'number') {
         slideDuration = calculateBpmDuration(data, videoOptions.slideDuration);
     } else {
-        const audioDuration = await getAudioDurationInSeconds('video_maker/temp/music/song.mp3');
+        const audioDuration = await getAudioDurationInSeconds(buildPath('video_maker/temp/music/song.mp3'));
         slideDuration = calculateBpmDuration(data, audioDuration / n);
     }
     return slideDuration;

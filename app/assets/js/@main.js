@@ -1,8 +1,10 @@
-const {shell, ipcRenderer} = require('electron');
+const {shell, ipcRenderer, remote} = require('electron');
 const fs = require('fs');
 const transitionLoadTime = 200;
 let localRequire = null;
 
+const prefix = createPrefix();
+const unpackedPrefix = createPrefix(true);
 const __configPath = 'video_maker/data/config.json';
 let config;
 
@@ -10,37 +12,64 @@ let isRendering = false;
 
 // File
 
-function fileExists(path) {
-    console.log('fileExists: ' + path);
-    return fs.existsSync(path);
+function createPrefix(isUnpacked = false) {
+    let string = remote.app.getAppPath().replace(/\\/g, '/');
+    if (string.charAt(string.length - 1) !== '/') {
+        string += '/';
+    }
+    if (isUnpacked) {
+        string = string.replace('.asar', '.asar.unpacked');
+    }
+    return string;
 }
 
-function loadFile(path) {
-    console.log('loadFile: ' + path);
-    return fs.readFileSync(path, 'utf8');
+function fileExists(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('fileExists: ' + address);
+    return fs.existsSync(address);
 }
 
-function deleteFile(path) {
-    console.log('deleteFile: ' + path);
-    fs.unlinkSync(path);
+function loadFile(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('loadFile: ' + address);
+    return fs.readFileSync(prefix + path, 'utf8');
 }
 
-function saveFile(path, string) {
-    console.log('saveFile: ' + path);
-    fs.writeFileSync(path, string);
+function deleteFile(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('deleteFile: ' + address);
+    fs.unlinkSync(address);
+}
+
+function saveFile(path, string, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('saveFile: ' + address);
+    fs.writeFileSync(prefix + path, string);
+}
+
+function loadDir(path, isUnpacked = false) {
+    const address = isUnpacked ? unpackedPrefix + path : prefix + path;
+    console.log('loadDir: ' + address);
+    return fs.readdirSync(address);
 }
 
 // JSON
 
 function saveJSON(path, data) {
-    console.log('saveJSON: ' + path);
-    fs.writeFileSync(path, JSON.stringify(data, null, 4));
+    let isUnpacked = false;
+    if (path === __configPath) {
+        isUnpacked = true;
+    }
+    saveFile(path, JSON.stringify(data, null, 4), isUnpacked);
     config = loadJSON(path);
 }
 
 function loadJSON(path) {
-    console.log('loadJSON: ' + path);
-    return JSON.parse(fs.readFileSync(path, 'utf8'));
+    let isUnpacked = false;
+    if (path === __configPath) {
+        isUnpacked = true;
+    }
+    return JSON.parse(loadFile(path, isUnpacked));
 }
 
 // External calls
@@ -102,6 +131,7 @@ function __vidmkStatusListener(event, args) {
     } else if (args.status === 'info') {
         local('updateRenderProcess', {code: args.message});
     } else if (args.status === 'error') {
+        if(isRendering) local('toggleRender', {hasStopped: true});
         showMsgBox(args.message);
     }
 }
@@ -131,14 +161,20 @@ function loadTransitions(...transitions) {
 }
 
 function showMsgBox(message) {
-    alert(message);
+    console.log(message);
+    remote.dialog.showMessageBoxSync({
+        type: 'info',
+        title: 'Message Video Generator',
+        buttons: ['Ok'],
+        message: message
+    });
 }
 
 // Main page
 
 function loadCSSFiles() {
     const path = 'app/assets/css';
-    fs.readdirSync(path).forEach(css => {
+    loadDir(path).forEach(css => {
         if (!css.includes('@')) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="../assets/css/${css}"/>`);
     });
 }
