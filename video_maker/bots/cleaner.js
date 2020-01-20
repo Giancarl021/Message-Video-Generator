@@ -8,6 +8,7 @@ function main() {
     const path = buildPath('video_maker/temp');
     printer.print('>> Verifying temp folders');
     printer.sendInfo('bot-process::cleaner::verifying-folders');
+    createDataDirectories();
     createTempDirectories(path);
     printer.sendInfo('bot-process::cleaner::cleaning-temp');
     const tmp = fs.readdirSync(path);
@@ -31,6 +32,12 @@ function createTempDirectories(path) {
             fs.mkdirSync(`${path}/${e}`);
         }
     });
+}
+
+function createDataDirectories() {
+    const path = buildPath('video_maker/data');
+    if(!fs.existsSync(path)) fs.mkdirSync(path);
+    if(!fs.existsSync(`${path}/images`)) fs.mkdirSync(`${path}/images`);
 }
 
 function clearDirectory(path) {
