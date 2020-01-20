@@ -80,7 +80,7 @@ function updateRenderProcess(args) {
             if (source === 'main') {
                 text = 'Vídeo renderizado';
             } else {
-                text = 'Finalização do Processamento de ' + source;
+                text = 'Finalização do processamento de ' + parseBotName(source);
             }
             break;
         case 'bot-process':
