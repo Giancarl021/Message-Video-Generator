@@ -52,7 +52,7 @@
         "videoshow": "^0.1.11"
     },
     "devDependencies": {
-        "electron": "^7.2.4",
+        "electron": "^18.3.7",
         "electron-builder": "^21.2.0",
         "electron-license": "^1.1.0"
     }
